@@ -69,6 +69,7 @@ discussões em:
 
 # Translations
 
+- [English - Original Site](https://missing.csail.mit.edu/)
 - [Chinese (Simplified)](https://missing-semester-cn.github.io/)
 - [Chinese (Traditional)](https://missing-semester-zh-hant.github.io/)
 - [Korean](https://missing-semester-kr.github.io/)
@@ -76,7 +77,6 @@ discussões em:
 - [Spanish](https://missing-semester-esp.github.io/)
 - [Turkish](https://missing-semester-tr.github.io/)
 - [Vietnamese](https://missing-semester-vn.github.io/)
-- [Original version - English](https://missing.csail.mit.edu/)
 
 Note: these are external links to community translations. We have not vetted
 them.
