@@ -31,7 +31,7 @@ Computação.
 
 # Estrutura do Curso
 
-Este curso consiste em 11 aulas de 1 hora, cada uma focada em um
+Este curso consiste em 12 aulas de 1 hora, cada uma focada em um
 [tópico](/2020/) em particular. As aulas são independentes entre si,
 porém, a medida que o semestre for passando, vamos presumir que você
 está familiarizado com o assunto das aulas mais recentes. Nós temos
@@ -39,7 +39,7 @@ disponibilizado notas de aula online, mas terá muito conteúdo que foi
 abordado nas aulas que não apareceram nelas (por exemplo, no formulário 
 de demos). Contudo, nós iremos gravar as aulas e postá-las online.
 
-Nós estamos tentando cobrir muito conteúdo em apenas 11 aulas de 1 hora,
+Nós estamos tentando cobrir muito conteúdo em apenas 12 aulas de 1 hora,
 então as aulas são bastante densas. Para que você tenha tempo para se 
 familiarizar com o conteúdo no seu próprio rítmo, cada aula incluirá um
 conjunto de exercícios que guiará você até os pontos chaves da aula. Depois
