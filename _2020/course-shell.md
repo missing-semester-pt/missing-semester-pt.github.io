@@ -1,61 +1,62 @@
 ---
 layout: lecture
-title: "Course overview + the shell"
-date: 2019-01-13
+title: "Visão geral do curso + o shell"
+date: 13-01-2019
 ready: true
 video:
   aspect: 56.25
   id: Z56Jmr9Z34Q
 ---
 
-# Motivation
+# Motivação
 
-As computer scientists, we know that computers are great at aiding in
-repetitive tasks. However, far too often, we forget that this applies
-just as much to our _use_ of the computer as it does to the computations
-we want our programs to perform. We have a vast range of tools
-available at our fingertips that enable us to be more productive and
-solve more complex problems when working on any computer-related
-problem. Yet many of us utilize only a small fraction of those tools; we
-only know enough magical incantations by rote to get by, and blindly
-copy-paste commands from the internet when we get stuck.
+Como cientistas da computação, nós sabemos que computadores são ótimos
+para ajudar a resolver tarefas repetitivas. Entretanto, frequentemente,
+nós esquecemos que isso se aplica tanto ao nosso _uso_ do computador 
+quanto aos processos que queremos que nossos programas realizem. Nós
+temos uma vasta gama de ferramentas de fácil acesso disponíveis que nos
+permitem ser mais produtivos e resolver problemas complexos quando estamos 
+trabalhando em algo relacionado à um problema computacional. Porém, 
+muitos de nós utilizamos uma pequena fração destas ferramentas; nós apenas
+sabemos encantamentos mágicos suficientes para sobreviver e cegamente copiamos 
+e colamos comandos da Internet quando ficamos travados em algum problema.
 
-This class is an attempt to address this.
+Este curso é uma tentativa de resolver isso.
 
-We want to teach you how to make the most of the tools you know, show
-you new tools to add to your toolbox, and hopefully instill in you some
-excitement for exploring (and perhaps building) more tools on your own.
-This is what we believe to be the missing semester from most Computer
-Science curricula.
+Queremos te ensinar a aproveitar ao máximo as ferramentas que você conhece, 
+te mostrar novas ferramentas e, com sorte, instigar você a explorar (e 
+talvez construir) mais ferramentas por conta própria. Isso é o que 
+acreditamos ser o semestre que falta na maioria dos cursos de Ciência da 
+Computação.
 
-# Class structure
+# Estrutura do Curso
 
-The class consists of 11 1-hour lectures, each one centering on a
-[particular topic](/2020/). The lectures are largely independent,
-though as the semester goes on we will presume that you are familiar
-with the content from the earlier lectures. We have lecture notes
-online, but there will be a lot of content covered in class (e.g. in the
-form of demos) that may not be in the notes. We will be recording
-lectures and posting the recordings online.
+Este curso consiste em 11 aulas de 1 hora, cada uma focada em um
+[tópico](/2020/) em particular. As aulas são independentes entre si,
+porém, a medida que o semestre for passando, vamos presumir que você
+está familiarizado com o assunto das aulas mais recentes. Nós temos
+disponibilizado notas de aula online, mas terá muito conteúdo que foi
+abordado nas aulas que não apareceram nelas (por exemplo, no formulário 
+de demos). Contudo, nós iremos gravar as aulas e postá-las online.
 
-We are trying to cover a lot of ground over the course of just 11 1-hour
-lectures, so the lectures are fairly dense. To allow you some time to
-get familiar with the content at your own pace, each lecture includes a
-set of exercises that guide you through the lecture's key points. After
-each lecture, we are hosting office hours where we will be present to
-help answer any questions you might have. If you are attending the class
-online, you can send us questions at
-[missing-semester@mit.edu](mailto:missing-semester@mit.edu).
+Nós estamos tentando cobrir muito conteúdo em apenas 11 aulas de 1 hora,
+então as aulas são bastante densas. Para que você tenha tempo para se 
+familiarizar com o conteúdo no seu próprio rítmo, cada aula incluirá um
+conjunto de exercícios que guiará você até os pontos chaves da aula. Depois
+de cada aula, nós disponibilizaremos um horário e local em que estaremos 
+presentes para ajudar a esclarecer quaisquer dúvidas que você possa ter.
+Se você estiver fazendo este curso online, você pode nos enviar dúvidas 
+em inglês para [missing-semester@mit.edu](mailto:missing-semester@mit.edu).
 
-Due to the limited time we have, we won't be able to cover all the tools
-in the same level of detail a full-scale class might. Where possible, we
-will try to point you towards resources for digging further into a tool
-or topic, but if something particularly strikes your fancy, don't
-hesitate to reach out to us and ask for pointers!
+Devido ao tempo limitado, nós não seremos capazes de abordar todas as 
+ferramentas no mesmo nível de detalhes do que um curso de longa duração 
+pode. Sempre que possível, tentaremos indicar recursos para se aprofundar 
+em uma ferramenta ou tópico, mas caso algo te interesse, não hesite em nos
+contactar e pedir sugestões de conteúdo!
 
-# Topic 1: The Shell
+# Tópico 1: O Shell
 
-## What is the shell?
+## O que é o shell?
 
 Computers these days have a variety of interfaces for giving them
 commands; fancyful graphical user interfaces, voice interfaces, and
