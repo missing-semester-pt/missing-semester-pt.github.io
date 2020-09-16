@@ -5,16 +5,16 @@ title: O semestre que falta na sua faculdade em ciência da computação
 
 As aulas vão te ensinar tudo sobre tópicos avançados de Ciência da Computação,
 de sistemas operacionais à machine learning. Mas há uma um assunto de extrema
-importancia que raramente é abordado e é deixado para que os alunos descubram:
+importância que raramente é abordado e é deixado para que os alunos descubram:
 como ser produtivo com suas ferramentas. Nós vamos lhe ensinar como dominar as
 linhas de comando, usar um editor de texto poderoso, usar recursos sofisticados
 de sistemas de controle de versão (Version Control Systems - VCS) e muito mais!
 
 Os estudantes dedicam horas e horas usando essas ferramentas durante o curso
-(e milhares de horas durante a carreira), então faz sentido fazer a experiência
-o mais fluida possível. Dominar estas ferramentas fará com que você gaste menos
-tempo descobrindo como lidar com as ferramentas e permitirá que você resolva 
-problemas que antes pareciam muito complexos e impossíveis.
+(e milhares de horas durante a carreira), então faz sentido fazer com que a
+experiência seja o mais fluida possível. Dominar estas ferramentas fará com
+que você gaste menos tempo descobrindo como lidar com as ferramentas e permitirá
+que você resolva problemas que antes pareciam muito complexos e impossíveis.
 
 Leia sobre a motivação por trás deste curso [aqui](/about/).
 
