@@ -1,9 +1,14 @@
-# The Missing Semester of Your CS Education [[![Build Status](https://travis-ci.com/missing-semester/missing-semester.svg?branch=master)](https://travis-ci.com/missing-semester/missing-semester)]
+# O Semestre que Falta na Sua Faculdade em Ciência da Computação [[![Build Status](https://travis-ci.com/missing-semester/missing-semester.svg?branch=master)](https://travis-ci.com/missing-semester/missing-semester)]
 
-Website for the [The Missing Semester of Your CS Education](https://missing.csail.mit.edu/) class!
+O site original: [The Missing Semester of Your CS Education](https://missing.csail.mit.edu/)
+Versão em português: https://missing-semester-pt.github.io/
 
-Contributions are most welcome! If you have edits or new content to add, please
-open an issue or submit a pull request.
+Contribuições são bem vindas! Se você tiver alguma ideia de edição ou novo comentário,
+por favor, abra uma issue ou envie uma pull request.
+
+## Tradução
+
+Este é o projeto de tradução para o Português do curso The Missing Semester.
 
 ## Development
 
