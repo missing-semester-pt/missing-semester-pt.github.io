@@ -58,43 +58,45 @@ contactar e pedir sugestões de conteúdo!
 
 ## O que é o shell?
 
-Computers these days have a variety of interfaces for giving them
-commands; fancyful graphical user interfaces, voice interfaces, and
-even AR/VR are everywhere. These are great for 80% of use-cases, but
-they are often fundamentally restricted in what they allow you to do —
-you cannot press a button that isn't there or give a voice command that
-hasn't been programmed. To take full advantage of the tools your
-computer provides, we have to go old-school and drop down to a textual
-interface: The Shell.
+Hoje, os computadores possuem uma variedade de interfaces para executar 
+comandos; interfaces gráficas estilosas, interfaces de voz e até mesmo
+a realidade aumentada e a realidade virtual estão em todos os lugares.
+E eles são ótimos para 80% dos casos, mas, frequentemente, restringem
+fundamentalmente o que você pode fazer - você não pode pressionar um 
+botão que não existe ou dar um comando de voz que não foi programado. 
+Para tirar vantagem total das ferramentas que seu computador oferece,
+nós teremos que ir à moda antiga e descer para uma interface textual:
+O Shell.
 
-Nearly all platforms you can get your hand on has a shell in one form or
-another, and many of them have several shells for you to choose from.
-While they may vary in the details, at their core they are all roughly
-the same: they allow you to run programs, give them input, and inspect
-their output in a semi-structured way.
+Quase todas as plataformas que você usa tem o shell nela de uma forma
+ou outra e muitas delas tem muitos shells para você escolher. Enquanto
+talvez eles variem em detalhes, no seu núcleo eles são basicamente o
+mesmo: eles permitem que você execute seus programas, insira entradas
+e inspecione sua estrutura de uma forma semi-estruturada.
 
-In this lecture, we will focus on the Bourne Again SHell, or "bash" for
-short. This is one of the most widely used shells, and its syntax is
-similar to what you will see in many other shells. To open a shell
-_prompt_ (where you can type commands), you first need a _terminal_.
-Your device probably shipped with one installed, or you can install one
-fairly easily.
+Nesta aula, nós iremos focar no Bourne Again SHell, o "bash". Este é
+um dos shells mais amplamente usado e  sua sintaxe é similar ao que 
+você verá em muitos outros shells. Para abrir um _prompt_ de shell
+(local onde você digita os comandos), primeiramente você precisará
+de um terminal. Seu aparelho provavelmente veio com um instalado,
+ou você poderá instalar um facilmente.
 
-## Using the shell
+## Usando o shell
 
-When you launch your terminal, you will see a _prompt_ that often looks
-a little like this:
+Quando você iniciar o terminal, provavelmente você verá um _prompt_
+que se parecerá com isso:
 
 ```console
 missing:~$ 
 ```
 
-This is the main textual interface to the shell. It tells you that you
-are on the machine `missing` and that your "current working directory",
-or where you currently are, is `~` (short for "home"). The `$` tells you
-that you are not the root user (more on that later). At this prompt you
-can type a _command_, which will then be interpreted by the shell. The
-most basic command is to execute a program:
+Esta é a interface textual principal para o shell. Te diz que você
+está na máquina `missing` e que você está na sua "área de trabalho
+atual", ou, onde você realmente está: `~` (abreviação para "home"). 
+O `$` te diz que você não é um usuário root (veremos mais sobre 
+isso depois). Neste prompt você pode digitar um _comando_, que vai
+ser interpretado pelo shell. O comando mais básico para executar um
+programa é:
 
 ```console
 missing:~$ date
@@ -102,30 +104,34 @@ Fri 10 Jan 2020 11:49:31 AM EST
 missing:~$ 
 ```
 
-Here, we executed the `date` program, which (perhaps unsurprisingly)
-prints the current date and time. The shell then asks us for another
-command to execute. We can also execute a command with _arguments_:
+Aqui, nós executamos o programa `date`, o qual (surpreendentemente)
+imprime a data e hora atual. O shell então nos pergunta por outro
+comando a se executar. Nós também podemos executar um comando com
+_argumentos_:
 
 ```console
 missing:~$ echo hello
 hello
 ```
 
-In this case, we told the shell to execute the program `echo` with the
-argument `hello`. The `echo` program simply prints out its arguments.
-The shell parses the command by splitting it by whitespace, and then
-runs the program indicated by the first word, supplying each subsequent
-word as an argument that the program can access. If you want to provide
-an argument that contains spaces or other special characters (e.g., a
-directory named "My Photos"), you can either quote the argument with `'`
-or `"` (`"My Photos"`), or escape just the relevant characters with `\`
-(`My\ Photos`).
+Neste exemplo, nós dizemos ao shell para executar o programa `echo`
+com o argumento `hello`. O `echo` simplesmente imprime na tela o
+argumento. O shell analisa o comando dividindo-o pelos espaços 
+brancos e então executa o programa indicado pela primeira fornecendo
+cada palavra subsequente como um argumento que o programa pode acessar.
+Se você quer fornecer um argumento que contem espaços em branco ou
+outro caractere especial (por exemplo: uma pasta chamada "Minhas fotos"),
+você pode ou escrever o argumento entre aspas `'` (`'Minhas fotos'`),
+ou usar aspas duplas `"` (`"Minhas fotos"`), ou digitar `\` antes de 
+caracteres relevantes (`My\ Photos`).
 
-But how does the shell know how to find the `date` or `echo` programs?
-Well, the shell is a programming environment, just like Python or Ruby,
-and so it has variables, conditionals, loops, and functions (next
-lecture!). When you run commands in your shell, you are really writing a
-small bit of code that your shell interprets. If the shell is asked to
+Mas como o shell sabe como encontrar os programas `date` ou `echo`? Bom,
+o shell é um ambiente de programação, assim como Python ou Ruby, então
+ele tem variáveis, condicionais, loops e funções (proxíma aula!). Quando
+você executa um comando no shell, você está escrevendo um pequeno pedaço
+de código que seu shell interpreta. Se você digita um comando que o shell
+não reconhece,
+If the shell is asked to
 execute a command that doesn't match one of its programming keywords, it
 consults an _environment variable_ called `$PATH` that lists which
 directories the shell should search for programs when it is given a
