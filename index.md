@@ -78,12 +78,16 @@ discussões em:
 - [Turkish](https://missing-semester-tr.github.io/)
 - [Vietnamese](https://missing-semester-vn.github.io/)
 
-Note: these are external links to community translations. We have not vetted
-them.
+Note: the translations are external links to community translations. The original
+equip have not vetted them.
 
 Have you created a translation of the course notes from this class? Submit a
 [pull request](https://github.com/missing-semester/missing-semester/pulls) so
 we can add it to the list!
+
+Se você quiser contribuir com a tradução em português, por favor, submeta um
+[pull request](https://github.com/missing-semester-pt/missing-semester-pt.github.io)
+para atualizar esta versão!
 
 ## Agradecimentos
 
