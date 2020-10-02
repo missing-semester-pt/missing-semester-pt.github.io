@@ -3,7 +3,7 @@
 O site original: [The Missing Semester of Your CS Education](https://missing.csail.mit.edu/)
 Versão em português: https://missing-semester-pt.github.io/
 
-Contribuições são bem vindas! Se você tiver alguma ideia de edição ou novo comentário,
+Contribuições são bem-vindas! Se você tiver alguma ideia de edição ou novo comentário,
 por favor, abra uma issue ou envie uma pull request.
 
 ## Tradução
