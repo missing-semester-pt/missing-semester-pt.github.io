@@ -178,15 +178,14 @@ missing:~$ ../../bin/echo hello
 hello
 ```
 
-Notice that our shell prompt kept us informed about what our current
-working directory was. You can configure your prompt to show you all
-sorts of useful information, which we will cover in a later lecture.
+Note que nosso shell sempre nos mantém informado sobre qual era nosso diretório atual. 
+Você pode configurar o terminal para mostrar todo o tipo de informação útil, iremos falar sobre isso mais adiante.
 
-In general, when we run a program, it will operate in the current
-directory unless we tell it otherwise. For example, it will usually
-search for files there, and create new files there if it needs to.
+Geralmente, iremos rodar um programa, e ele irá operar no diretório atual a não ser 
+que indiquemos outro diretório. Por exemplo, geralmente irá procurar por arquivos
+no diretório atual, e criará arquivos ali se for necessário.
 
-To see what lives in a given directory, we use the `ls` command:
+Para ver o que existe no atual diretório, usamos o comando `ls`:
 
 ```console
 missing:~$ ls
@@ -203,12 +202,10 @@ home
 ...
 ```
 
-Unless a directory is given as its first argument, `ls` will print the
-contents of the current directory. Most commands accept flags and
-options (flags with values) that start with `-` to modify their
-behavior. Usually, running a program with the `-h` or `--help` flag
-will print some help text that tells you what flags
-and options are available. For example, `ls --help` tells us:
+A não ser que um diretório seja passado como primeiro argumento, `ls` irá imrpimir na tela
+os conteúdos do atual diretório. A maioria dos comandos aceitam flags e opções (flags com valores) que comecem com `-` para modificar 
+o seu comportamento. Geralmente rodar um programa com `-h` ou `--help` irá trazer algum texto destinado a ajudar o usuário e explicar 
+quais flags e opções estão disponíveis. Por exemplo, `ls --help` nos diz:
 
 ```
   -l                         use a long listing format
@@ -219,30 +216,18 @@ missing:~$ ls -l /home
 drwxr-xr-x 1 missing  users  4096 Jun 15  2019 missing
 ```
 
-This gives us a bunch more information about each file or directory
-present. First, the `d` at the beginning of the line tells us that
-`missing` is a directory. Then follow three groups of three characters
-(`rwx`). These indicate what permissions the owner of the file
-(`missing`), the owning group (`users`), and everyone else respectively
-have on the relevant item. A `-` indicates that the given principal does
-not have the given permission. Above, only the owner is allowed to
-modify (`w`) the `missing` directory (i.e., add/remove files in it). To
-enter a directory, a user must have "search" (represented by "execute":
-`x`) permissions on that directory (and its parents). To list its
-contents, a user must have read (`r`) permissions on that directory. For
-files, the permissions are as you would expect. Notice that nearly all
-the files in `/bin` have the `x` permission set for the last group,
-"everyone else", so that anyone can execute those programs.
+Isso nos traz bastante informações sobre cada arquivo ou diretório presente. 
+Primeiro, o `d` no início da linha nos diz que `missing` é um diretório. Então os 
+três seguintes grupos de caracteres (`rwx`). Esses indicam quais as permissões o dono do diretório (`missing`), 
+o grupo atual (`users`), e todo o resto respectivamente tem em relação ao item. Uma `-` indica que 
+atualmente não há permissão para fazer tal ação. Acima, apenas o dono é que consegue alterar (`w`) o diretório `missing` (adicionar/remover arquivos). 
+Para entrar em um diretório, o usuário precisa ter a permissão de "procurar" (representada por "execute":`x`) naquele diretório (e nos seus diretórios pais). 
+Para listar os seus conteúdos, o usuário precisa ter a permissão de leitura (`r`) naquele diretório. Para arquivos, as permissões necessitam ser as mesmas. 
+Note que praticamente todos os arquivos em `/bin` tem a permissão de `x` indicada para o último grupo, "todos os outros", para que todos possam executar estes programas.
 
-Some other handy programs to know about at this point are `mv` (to
-rename/move a file), `cp` (to copy a file), and `mkdir` (to make a new
-directory).
+Alguns outros programas muito úteis para se saber nesse ponto são o `mv` (para renomear/mover um arquivo), `cp` (para copiar um arquivo), e `mkdir` (para fazer um novo diretório).
 
-If you ever want _more_ information about a program's arguments, inputs,
-outputs, or how it works in general, give the `man` program a try. It
-takes as an argument the name of a program, and shows you its _manual
-page_. Press `q` to exit.
-
+Se você quiser _mais_ informação sobre os argumentos de um programa, entradas, saídas, ou como ele funciona no geral, dê uma chance para o programa `man`. Ele leva como argumento o nome do programa que deseja saber mais informações, e mostra o seu _manual_. Pressione `q` para sair.
 ```console
 missing:~$ man ls
 ```
