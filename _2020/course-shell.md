@@ -130,13 +130,8 @@ o shell é um ambiente de programação, assim como Python ou Ruby, então
 ele tem variáveis, condicionais, loops e funções (proxíma aula!). Quando
 você executa um comando no shell, você está escrevendo um pequeno pedaço
 de código que seu shell interpreta. Se você digita um comando que o shell
-não reconhece,
-If the shell is asked to
-execute a command that doesn't match one of its programming keywords, it
-consults an _environment variable_ called `$PATH` that lists which
-directories the shell should search for programs when it is given a
-command:
-
+não reconhece, ele consulta uma _variavel de ambiente_ chamada $PATH
+que lista quais diretórios o shell pode procurar por programas quando é lhe dado algum comando:
 
 ```console
 missing:~$ echo $PATH
@@ -147,26 +142,22 @@ missing:~$ /bin/echo $PATH
 /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ```
 
-When we run the `echo` command, the shell sees that it should execute
-the program `echo`, and then searches through the `:`-separated list of
-directories in `$PATH` for a file by that name. When it finds it, it
-runs it (assuming the file is _executable_; more on that later). We can
-find out which file is executed for a given program name using the
-`which` program. We can also bypass `$PATH` entirely by giving the
-_path_ to the file we want to execute.
+Quando rodamos o comando _echo_, o shell percebe que deveria executar o programa _echo_, e então procura através
+`:`-da lista separada de diretórios na variável de ambiente `$PATH` por um arquivo que tenha este nome. Quando encontra, 
+ele roda o arquivo (assumindo que seja _executável_; explicaremos mais sobre isso adiante). Nós podemos descobrir qual arquivo
+é executado por um determinado programa utilizando o `which`. Nós também podemos contornar o `$PATH` colocando
+_path_ no arquivo que queremos executar.
 
-## Navigating in the shell
 
-A path on the shell is a delimited list of directories; separated by `/`
-on Linux and macOS and `\` on Windows. On Linux and macOS, the path `/`
-is the "root" of the file system, under which all directories and files
-lie, whereas on Windows there is one root for each disk partition (e.g.,
-`C:\`). We will generally assume that you are using a Linux filesystem
-in this class. A path that starts with `/` is called an _absolute_ path.
-Any other path is a _relative_ path. Relative paths are relative to the
-current working directory, which we can see with the `pwd` command and
-change with the `cd` command. In a path, `.` refers to the current
-directory, and `..` to its parent directory:
+## Navegando no shell
+
+Um caminho no shell é uma lista delimitada de diretórios; separada por `/` 
+no Linux e no macOS e `\` no Windows. No Linux e macOS, o caminho `/` é a raiz do sistema, 
+na qual abaixo ficam todos os diretórios e arquivos, enquanto no Windows existe uma raiz para 
+cada partição do disco (`C:\`). Nós geralmente iremos assumir que você está usando um sistema Linux
+para essa classe. Um caminho que começa com `/` é chamado de caminho _absoluto_. Qualquer outro caminho
+é um caminho _relativo_. Caminhos relativos são relativos ao atual diretório, no qual podemos ver com o comando`pwd`
+e mudar utilizando o comando `cd`. Em um caminho, `.` se refere ao diretório atual, e `..` ao seu diretório pai:
 
 ```console
 missing:~$ pwd
