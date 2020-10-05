@@ -145,7 +145,7 @@ missing:~$ /bin/echo $PATH
 Quando rodamos o comando `echo`, o shell entende que deve executar
 o programa `echo`, e então o procura na lista de diretórios separados
 por `:` contidos no `$PATH`. Quando o programa é encontrado, ele é
-executado (desde que o arquivo seja um _executável; mais sobre o tópico depois).
+executado (desde que o arquivo seja um _executável; mais sobre isso adiante).
 Nós podemos descobrir que arquivo é executado para um devido programa atráves do
 programa `which`. Também podemos ignorar o `$PATH` completamente se digitarmos
 diretamente o _caminho_ do arquivo que queremos executar.
