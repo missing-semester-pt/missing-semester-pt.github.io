@@ -130,8 +130,8 @@ o shell é um ambiente de programação, assim como Python ou Ruby, então
 ele tem variáveis, condicionais, loops e funções (proxíma aula!). Quando
 você executa um comando no shell, você está escrevendo um pequeno pedaço
 de código que seu shell interpreta. Se você digita um comando que o shell
-não reconhece, ele consulta uma _variavel de ambiente_ chamada $PATH
-que lista quais diretórios o shell pode procurar por programas quando é lhe dado algum comando:
+não reconhece, ele consulta uma _variável de ambiente_ chamada `$PATH` que
+lista quais diretórios que o shell deve procurar por programas.
 
 ```console
 missing:~$ echo $PATH
@@ -142,22 +142,26 @@ missing:~$ /bin/echo $PATH
 /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ```
 
-Quando rodamos o comando _echo_, o shell percebe que deveria executar o programa _echo_, e então procura através
-`:`-da lista separada de diretórios na variável de ambiente `$PATH` por um arquivo que tenha este nome. Quando encontra, 
-ele roda o arquivo (assumindo que seja _executável_; explicaremos mais sobre isso adiante). Nós podemos descobrir qual arquivo
-é executado por um determinado programa utilizando o `which`. Nós também podemos contornar o `$PATH` colocando
-_path_ no arquivo que queremos executar.
-
+Quando rodamos o comando `echo`, o shell percebe que deveria executar 
+o programa `echo`, e então procura um arquivo de mesmo nome na lista 
+de diretórios separados por `:` contidos no `$PATH`. Quando encontra, 
+ele roda o arquivo (assumindo que seja _executável_; explicaremos mais 
+sobre isso adiante). Nós podemos descobrir qual arquivo é executado por 
+um determinado programa utilizando o `which`. Nós também podemos ignorar
+o `$PATH` colocando o _caminho_ do arquivo que queremos executar.
 
 ## Navegando no shell
 
 Um caminho no shell é uma lista delimitada de diretórios; separada por `/` 
-no Linux e no macOS e `\` no Windows. No Linux e macOS, o caminho `/` é a raiz do sistema, 
-na qual abaixo ficam todos os diretórios e arquivos, enquanto no Windows existe uma raiz para 
-cada partição do disco (`C:\`). Nós geralmente iremos assumir que você está usando um sistema Linux
-para essa classe. Um caminho que começa com `/` é chamado de caminho _absoluto_. Qualquer outro caminho
-é um caminho _relativo_. Caminhos relativos são relativos ao atual diretório, no qual podemos ver com o comando`pwd`
-e mudar utilizando o comando `cd`. Em um caminho, `.` se refere ao diretório atual, e `..` ao seu diretório pai:
+no Linux e no macOS e `\` no Windows. No Linux e macOS, o caminho `/` é a
+raiz do sistema, na qual ficam todos os diretórios e arquivos, enquanto 
+no Windows existe uma raiz para cada partição do disco (`C:\`). Nós 
+geralmente iremos assumir que você está usando um sistema Linux para essa 
+classe. Um caminho que começa com `/` é chamado de caminho _absoluto_. 
+Qualquer outro caminho é um caminho _relativo_. Caminhos relativos são 
+relativos ao atual diretório, no qual podemos ver com o comando`pwd` e mudar 
+utilizando o comando `cd`. Em um caminho, `.` se refere ao diretório atual, 
+e `..` ao seu diretório pai:
 
 ```console
 missing:~$ pwd
@@ -179,7 +183,8 @@ hello
 ```
 
 Note que nosso shell sempre nos mantém informado sobre qual era nosso diretório atual. 
-Você pode configurar o terminal para mostrar todo o tipo de informação útil, iremos falar sobre isso mais adiante.
+Você pode configurar o terminal para mostrar todo o tipo de informação útil, iremos 
+falar sobre isso mais adiante.
 
 Geralmente, iremos rodar um programa, e ele irá operar no diretório atual a não ser 
 que indiquemos outro diretório. Por exemplo, geralmente irá procurar por arquivos
@@ -203,8 +208,9 @@ home
 ```
 
 A não ser que um diretório seja passado como primeiro argumento, `ls` irá imrpimir na tela
-os conteúdos do atual diretório. A maioria dos comandos aceitam flags e opções (flags com valores) que comecem com `-` para modificar 
-o seu comportamento. Geralmente rodar um programa com `-h` ou `--help` irá trazer algum texto destinado a ajudar o usuário e explicar 
+os conteúdos do atual diretório. A maioria dos comandos aceitam flags e opções (flags com 
+valores) que comecem com `-` para modificar o seu comportamento. Geralmente rodar um 
+programa com `-h` ou `--help` irá trazer algum texto destinado a ajudar o usuário e explicar 
 quais flags e opções estão disponíveis. Por exemplo, `ls --help` nos diz:
 
 ```
@@ -218,16 +224,25 @@ drwxr-xr-x 1 missing  users  4096 Jun 15  2019 missing
 
 Isso nos traz bastante informações sobre cada arquivo ou diretório presente. 
 Primeiro, o `d` no início da linha nos diz que `missing` é um diretório. Então os 
-três seguintes grupos de caracteres (`rwx`). Esses indicam quais as permissões o dono do diretório (`missing`), 
-o grupo atual (`users`), e todo o resto respectivamente tem em relação ao item. Uma `-` indica que 
-atualmente não há permissão para fazer tal ação. Acima, apenas o dono é que consegue alterar (`w`) o diretório `missing` (adicionar/remover arquivos). 
-Para entrar em um diretório, o usuário precisa ter a permissão de "procurar" (representada por "execute":`x`) naquele diretório (e nos seus diretórios pais). 
-Para listar os seus conteúdos, o usuário precisa ter a permissão de leitura (`r`) naquele diretório. Para arquivos, as permissões necessitam ser as mesmas. 
-Note que praticamente todos os arquivos em `/bin` tem a permissão de `x` indicada para o último grupo, "todos os outros", para que todos possam executar estes programas.
+três seguintes grupos de caracteres (`rwx`) indicam quais as permissões o dono do 
+diretório (`missing`), o grupo atual (`users`), e todo o resto respectivamente tem 
+em relação ao item. Uma `-` indica que atualmente não há permissão para fazer tal 
+ação. Acima, apenas o dono é que consegue alterar (`w`) o diretório `missing` 
+(adicionar/remover arquivos). Para entrar em um diretório, o usuário precisa ter a 
+permissão de "procurar" (representada por "execute":`x`) naquele diretório (e nos 
+seus diretórios pais). Para listar os seus conteúdos, o usuário precisa ter a 
+permissão de leitura (`r`) naquele diretório. Para arquivos, as permissões necessitam 
+ser as mesmas. Note que praticamente todos os arquivos em `/bin` tem a permissão de `x`,
+que indicada para o último grupo, "todos os outros", que o arquivo é um executável.
 
-Alguns outros programas muito úteis para se saber nesse ponto são o `mv` (para renomear/mover um arquivo), `cp` (para copiar um arquivo), e `mkdir` (para fazer um novo diretório).
+Alguns outros programas muito úteis para se saber nesse ponto são o `mv` (para renomear/mover
+um arquivo), `cp` (para copiar um arquivo), e `mkdir` (para fazer um novo diretório).
 
-Se você quiser _mais_ informação sobre os argumentos de um programa, entradas, saídas, ou como ele funciona no geral, dê uma chance para o programa `man`. Ele leva como argumento o nome do programa que deseja saber mais informações, e mostra o seu _manual_. Pressione `q` para sair.
+Se você quiser _mais_ informação sobre os argumentos de um programa, entradas, saídas, ou 
+como ele funciona no geral, experimente o programa `man`. Ele leva como argumento o 
+nome do programa que deseja saber mais informações, e mostra o seu _manual_. Pressione `q` 
+para sair.
+
 ```console
 missing:~$ man ls
 ```

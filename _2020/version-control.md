@@ -1,6 +1,6 @@
 ---
 layout: lecture
-title: "Version Control (Git)"
+title: "Controle de Versão (Git)"
 date: 2019-01-22
 ready: true
 video:

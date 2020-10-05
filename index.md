@@ -4,7 +4,7 @@ title: O semestre que falta na sua faculdade em ciência da computação
 ---
 
 As aulas vão te ensinar tudo sobre tópicos avançados de Ciência da Computação,
-de sistemas operacionais à machine learning. Mas há uma um assunto de extrema
+de sistemas operacionais à machine learning. Mas há um assunto de extrema
 importância que raramente é abordado e é deixado para que os alunos descubram:
 como ser produtivo com suas ferramentas. Nós vamos lhe ensinar como dominar as
 linhas de comando, usar um editor de texto poderoso, usar recursos sofisticados
@@ -52,7 +52,7 @@ Aulas gravadas disponíveis [no YouTube](https://www.youtube.com/playlist?list=P
 # Sobre as aulas
 
 **Equipe**: Essa aula foi lecionada por [Anish](https://www.anishathalye.com/), [Jon](https://thesquareplanet.com/) e [Jose](http://josejg.com/).
-**Dúvidas**: Nos envie um e-mail para [missing-semester@mit.edu](mailto:missing-semester@mit.edu).
+**Dúvidas**: Nos envie um e-mail em [missing-semester@mit.edu](mailto:missing-semester@mit.edu).
 
 # Além do MIT
 

@@ -1,6 +1,6 @@
 ---
 layout: lecture
-title: "Shell Tools and Scripting"
+title: "Ferramentas do Shell e Scripting"
 date: 2019-01-14
 ready: true
 video:
