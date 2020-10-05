@@ -130,13 +130,8 @@ o shell é um ambiente de programação, assim como Python ou Ruby, então
 ele tem variáveis, condicionais, loops e funções (proxíma aula!). Quando
 você executa um comando no shell, você está escrevendo um pequeno pedaço
 de código que seu shell interpreta. Se você digita um comando que o shell
-não reconhece,
-If the shell is asked to
-execute a command that doesn't match one of its programming keywords, it
-consults an _environment variable_ called `$PATH` that lists which
-directories the shell should search for programs when it is given a
-command:
-
+não reconhece, ele consulta uma _variável de ambiente_ chamada `$PATH` que
+lista quais diretórios o shell deve procurar por programas.
 
 ```console
 missing:~$ echo $PATH
@@ -147,13 +142,13 @@ missing:~$ /bin/echo $PATH
 /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ```
 
-When we run the `echo` command, the shell sees that it should execute
-the program `echo`, and then searches through the `:`-separated list of
-directories in `$PATH` for a file by that name. When it finds it, it
-runs it (assuming the file is _executable_; more on that later). We can
-find out which file is executed for a given program name using the
-`which` program. We can also bypass `$PATH` entirely by giving the
-_path_ to the file we want to execute.
+Quando rodamos o comando `echo`, o shell entende que deve executar
+o programa `echo`, e então o procura na lista de diretórios separados
+por `:` contidos no `$PATH`. Quando o programa é encontrado, ele é
+executado (desde que o arquivo seja um _executável; mais sobre o tópico depois).
+Nós podemos descobrir que arquivo é executado para um devido programa atráves do
+programa `which`. Também podemos ignorar o `$PATH` completamente se digitarmos
+diretamente o _caminho_ do arquivo que queremos executar.
 
 ## Navigating in the shell
 
