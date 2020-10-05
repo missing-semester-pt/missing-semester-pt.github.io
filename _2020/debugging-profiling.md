@@ -1,6 +1,6 @@
 ---
 layout: lecture
-title: "Debugging and Profiling"
+title: "Depurando o Código e Performance"
 date: 2019-01-23
 ready: true
 video:

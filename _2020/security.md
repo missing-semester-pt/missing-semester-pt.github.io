@@ -1,6 +1,6 @@
 ---
 layout: lecture
-title: "Security and Cryptography"
+title: "Segurança e Criptografia"
 date: 2019-01-28
 ready: true
 video:

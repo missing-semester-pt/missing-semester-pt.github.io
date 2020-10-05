@@ -1,6 +1,6 @@
 ---
 layout: lecture
-title: "Q&A"
+title: "Perguntas e Respostas"
 date: 2019-01-30
 ready: true
 video:
