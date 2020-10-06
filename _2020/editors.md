@@ -1,6 +1,6 @@
 ---
 layout: lecture
-title: "Editors (Vim)"
+title: "Editores de Texto (Vim)"
 date: 2019-01-15
 ready: true
 video:
