@@ -163,54 +163,54 @@ O `tmux` espera que você conheça os seus atalhos do teclado. Todos eles tem o 
 Para referência, 
 [aqui](https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/) está um tutorial rápido do `tmux` e [aqui](http://linuxcommand.org/lc3_adv_termmux.php) você pode ver uma explicação mais detalhada que cobre o comando original `screen`. Talvez você também queira se conhecer [`screen`](https://www.man7.org/linux/man-pages/man1/screen.1.html), já que ele vem instalado na maioria dos sistemas UNIX.
 
-# Aliases
+# Apelidos
 
-It can become tiresome typing long commands that involve many flags or verbose options.
-For this reason, most shells support _aliasing_.
-A shell alias is a short form for another command that your shell will replace automatically for you.
-For instance, an alias in bash has the following structure:
+Escrever longos comandos que envolvem muitos parâmetros e opções verbosas pode ser cansativo.
+Por essa razão, muitos _shells_ permitem a criação de _apelidos_.
+Um apelido do shell é uma representação mais curta para outro comando que o _shell_ irá substituir automaticamente para você.
+Por exemplo, um apelido no _bash_ tem a seguinte estrutura:
 
 ```bash
-alias alias_name="command_to_alias arg1 arg2"
+alias nome_do_apelido="comando_abreviado arg1 arg2"
 ```
 
-Note that there is no space around the equal sign `=`, because [`alias`](https://www.man7.org/linux/man-pages/man1/alias.1p.html) is a shell command that takes a single argument.
+Observe que não há espaços em volta do sinal de igual `=`, porque [`alias`](https://www.man7.org/linux/man-pages/man1/alias.1p.html) é um comando que recebe um único argumento.
 
-Aliases have many convenient features:
+Apelidos tem várias funcionalidades convenientes:
 
 ```bash
-# Make shorthands for common flags
+# Fazer atalhos para parâmetros comuns
 alias ll="ls -lh"
 
-# Save a lot of typing for common commands
+# Digitar menos em comandos comuns
 alias gs="git status"
 alias gc="git commit"
 alias v="vim"
 
-# Save you from mistyping
+# Driblar problemas causados por erros de digitação
 alias sl=ls
 
-# Overwrite existing commands for better defaults
+# Sobrescrever comandos existents para um melhor comportamento padrão
 alias mv="mv -i"           # -i prompts before overwrite
 alias mkdir="mkdir -p"     # -p make parent dirs as needed
 alias df="df -h"           # -h prints human readable format
 
-# Alias can be composed
+# Apelidos podem ser compostos
 alias la="ls -A"
 alias lla="la -l"
 
-# To ignore an alias run it prepended with \
+# Para ignorar um apelido execute o comando prefixado por um \
 \ls
-# Or disable an alias altogether with unalias
+# Ou desative o apelido com o comando `unalias`
 unalias la
 
-# To get an alias definition just call it with alias
+# Para obter a definição de um apelido chame-o com o comando `alias`
 alias ll
-# Will print ll='ls -lh'
+# Imprimirá ll='ls -lh'
 ```
 
-Note that aliases do not persist shell sessions by default.
-To make an alias persistent you need to include it in shell startup files, like `.bashrc` or `.zshrc`, which we are going to introduce in the next section.
+Note também que apelidos não persistem por sessões do _shell_ por padrão.
+Para fazer que um apelido seja persistente, você precisa incluí-lo em arquivos de inicialização do _shell_, como `.bashrc` ou `.zshrc`, que vão ser introduzidos na próxima seção.
 
 
 # Dotfiles
