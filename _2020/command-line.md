@@ -215,56 +215,41 @@ Para fazer que um apelido seja persistente, você precisa incluí-lo em arquivos
 
 # Dotfiles
 
-Many programs are configured using plain-text files known as _dotfiles_
-(because the file names begin with a `.`, e.g. `~/.vimrc`, so that they are
-hidden in the directory listing `ls` by default).
+Muitos programas são configurados utilizando arquivos de texto simples conhecidos como _dotfiles_. 
+(porque os nomes desses arquivos começam com um `.`, como por exemplo `~/.vimrc`, ficando ocultos na listagem de diretórios do `ls` por padrão.)
 
-Shells are one example of programs configured with such files. On startup, your shell will read many files to load its configuration.
+_Shells_ são exemplos de programas configurados com esses arquivos. Na sua inicialização, o seu _shell_ irá ler vários arquivos para carregar a sua configuração.
+Dependendo do _shell_, seja iniciando um login e/ou uma sessão interativa o processo de inicialização pode ser razoavelmente complexo.
 Depending on the shell, whether you are starting a login and/or interactive the entire process can be quite complex.
-[Here](https://blog.flowblok.id.au/2013-02/shell-startup-scripts.html) is an excellent resource on the topic.
+[Aqui](https://blog.flowblok.id.au/2013-02/shell-startup-scripts.html) está uma excelente referência nesse tópico.
 
-For `bash`, editing your `.bashrc` or `.bash_profile` will work in most systems.
-Here you can include commands that you want to run on startup, like the alias we just described or modifications to your `PATH` environment variable.
-In fact, many programs will ask you to include a line like `export PATH="$PATH:/path/to/program/bin"` in your shell configuration file so their binaries can be found.
+No caso do `bash`, editar o seu `.bashrc` ou `.bash_profile` funcionará na maioria dos sistemas.
+Aqui você pode incluir comandos que você deseja que rodem na inicialização, como os apelidos descritos na seção anterior ou modificações à variável de ambiente `PATH`.
+Na verdade, vários programas pedirão que você inclua uma linha como `export PATH="$PATH:/caminho/para/programa/bin"` na configuração do seu _shell_ para que os seus arquivos binários possam ser encontrados.
 
 Some other examples of tools that can be configured through dotfiles are:
+Outros exemplos de ferramentas que podem ser configuradas por meio de _dotfiles_ são:
 
 - `bash` - `~/.bashrc`, `~/.bash_profile`
 - `git` - `~/.gitconfig`
-- `vim` - `~/.vimrc` and the `~/.vim` folder
+- `vim` - `~/.vimrc` e a pasta `~/.vim`
 - `ssh` - `~/.ssh/config`
 - `tmux` - `~/.tmux.conf`
 
-How should you organize your dotfiles? They should be in their own folder,
-under version control, and **symlinked** into place using a script. This has
-the benefits of:
+Como _dotfiles_ devem ser organizados? Eles devem estar na sua própria pasta, sob um sistema de controle de versionamento e com **links simbólicos** criados adequadamente utilizando um script. Isso tem os seguintes benefícios:
 
-- **Easy installation**: if you log in to a new machine, applying your
-customizations will only take a minute.
-- **Portability**: your tools will work the same way everywhere.
-- **Synchronization**: you can update your dotfiles anywhere and keep them all
-in sync.
-- **Change tracking**: you're probably going to be maintaining your dotfiles
-for your entire programming career, and version history is nice to have for
-long-lived projects.
+- **Instalação fácil**: se você fizer login em uma nova máquina, aplicar as suas customizações levará pouco tempo.
+- **Portabilidade**: as suas ferramentas funcionam da mesma maneira em qualquer lugar.
+- **Sincronização**: você pode atualizar os seus _dotfiles_ em qualquer lugar e mantê-los sincronizados.
+- **Rastreamento de mudanças**: provavelmente você vai manter os seus _dotfiles_ por toda a sua carreira, e é bom ter histórico de versões por projetos de longo prazo.
 
-What should you put in your dotfiles?
-You can learn about your tool's settings by reading online documentation or
-[man pages](https://en.wikipedia.org/wiki/Man_page). Another great way is to
-search the internet for blog posts about specific programs, where authors will
-tell you about their preferred customizations. Yet another way to learn about
-customizations is to look through other people's dotfiles: you can find tons of
-[dotfiles
-repositories](https://github.com/search?o=desc&q=dotfiles&s=stars&type=Repositories)
-on Github --- see the most popular one
-[here](https://github.com/mathiasbynens/dotfiles) (we advise you not to blindly
-copy configurations though).
-[Here](https://dotfiles.github.io/) is another good resource on the topic.
+O que deve ser colocado nos seus _dotfiles_?
+Você pode aprender mais sobre as configurações de uma ferramenta específica ao ler a sua documentação online ou as [páginas do man](https://en.wikipedia.org/wiki/Man_page). Outra ótima alternativa é pesquisar na internet por posts em blogs sobre programas específicos, em que autores expõe as suas customizações preferidas. Outra maneira para aprender sobre essas customizações é olhar os _dotfiles_ de outras pessoas: você pode encontrar diversos [repositórios de _dotfiles_](https://github.com/search?o=desc&q=dotfiles&s=stars&type=Repositories) no GitHub --- veja o mais popular [aqui](https://github.com/mathiasbynens/dotfiles) (no entanto, recomenda-se que você não copie configurações cegamente. Tente adaptar às suas preferências).
+[Aqui](https://dotfiles.github.io/) você pode encontrar outra boa referência nesse tópico.
 
-All of the class instructors have their dotfiles publicly accessible on GitHub: [Anish](https://github.com/anishathalye/dotfiles),
+Todos os instrutores das aulas tem os seus _dotfiles_ disponibilizados no GitHub: [Anish](https://github.com/anishathalye/dotfiles),
 [Jon](https://github.com/jonhoo/configs),
 [Jose](https://github.com/jjgo/dotfiles).
-
 
 ## Portability
 
