@@ -24,7 +24,7 @@ eficientemente, desperdiçando tempo e esforço em tarefas que _deveriam_ ser si
 O currículo oficial de Ciência da Computação está devendo tópicos cruciais sobre o
 ecossistema de computação que poderia tornar a vida de estudantes significativamente mais simples.
 
-# O semestre que faltava na sua educação em Ciência da Computaçao
+# O semestre que falta na sua faculdade em ciência da computação
 
 Para ajudar a resolver isso, nós estamos oferecendo uma disciplina que cobre todos os tópicos
 que consideramos cruciais para um cientista da computação ou programador efetivo.
@@ -33,14 +33,14 @@ e técnicas que você poderá imediatamente aplicar numa grande variedade de sit
 A disciplina está sendo oferecida durante o "Período de Atividades Independentes" do MIT,
 em Janeiro de 2020 - um semestre de um mês onde são ofertadas disciplinas ministradas por
 estudantes. Enquanto que as aulas estarão disponíveis apenas para alunos do MIT, nós vamos
-divulgar todos os materiais, junto com gravações em vídeo ao público.
+divulgar todos os materiais, junto com gravações em vídeo, ao público.
 
-Se isso parece algo que você gostaria, aqui estão alguns exemplos concretos do que a
+Se você se interessou, aqui estão alguns exemplos concretos do que a
 disciplina vai ensinar:
 
-## Shell de Comandos
+## Comandos Shell
 
-Como automatizar tarefas repetitivas com aliases, scripts e
+Como automatizar tarefas repetitivas com apelidos, scripts e
 sistemas de build. Nunca mais copiar e colar comandos de um
 documento de texto. Nunca mais "rode esses 15 comandos um
 após o outro". Nunca mais "você esqueceu de rodar isso aqui"
@@ -56,7 +56,7 @@ shell buscando por comandos `convert`.
 
 ## Controle de versão
 
-Como usar controle de versão _apropriadamente_, e utilizá-lo para
+Como usar controle de versão _apropriadamente_, utilizá-lo para
 te salvar de um desastre, colaborar com outros e rapidamente encontrar e
 isolar mudanças problemáticas. Nunca mais `rm -rf; git clone`. Nunca mais
 grandes blocos de código comentado. Nunca mais se desesperar sobre como
@@ -73,10 +73,6 @@ unitário e, então, concertamos com `git revert`.
 
 ## Edição de texto
 
-How to efficiently edit files from the command-line, both locally and
-remotely, and take advantage of advanced editor features. No more
-copying files back and forth. No more repetitive file editing.
-
 Como eficientemente editar arquivos da linha de comando, tanto localmente
 quanto remotamente, e tirar vantagem de funcionalidades avançadas do editor.
 Nunca mais copiar arquivos pra lá e pra cá. Nunca mais edição repetitiva de arquivos.
@@ -90,13 +86,13 @@ Os macros do Vim são uma das melhores funcionalidades dele. No exemplo abaixo, 
 ## Máquinas remotas
 
 Como se manter são quando estiver trabalhando com máquinas remotas
-usando chaves SSH e multiplexing de terminal. Nunca mais manter
+usando chaves SSH e multiplexadores de terminal. Nunca mais manter
 vários terminais abertos apenas para rodar dois comandos ao mesmo
-tempo. Nunca mais digitar a sua senha toda vida que se conectar.
+tempo. Nunca mais digitar a sua senha toda vez que se conectar.
 Nunca mais perder tudo porque a sua internet disconectou ou você
 teve que reiniciar o seu notebook.
 
-No exemplo abaixo, nós usamos `tmux` para manter as seções vivas em servidores remotos e `mosh` para fazer roaming de redes e desconexão.
+No exemplo abaixo, nós usamos `tmux` para manter as seções vivas em servidores remotos e `mosh` para fazer itinerância de redes e desconexão.
 
 <video autoplay="autoplay" loop="loop" controls muted playsinline  oncontextmenu="return false;"  preload="auto"  class="demo">
   <source src="/static/media/demos/ssh.mp4" type="video/mp4">
@@ -117,7 +113,7 @@ Nós também usamos `cd` e `vim` em arquivos/pastas recentes/frequentes usando `
 
 ## Lidando com dados
 
-Como rapidamente e facilmente modificar, ver, parsear, plotar e computar sobre
+Como rapidamente e facilmente modificar, ver, analisar, plotar e computar
 dados e arquivos direto da linha de comando. Nunca mais copiar e colar
 de arquivos de log. Nunca mais manualmente calcular estatística sobre os dados.
 Nunca mais plotar em planilhas.
