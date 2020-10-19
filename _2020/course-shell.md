@@ -131,7 +131,7 @@ ele tem variáveis, condicionais, loops e funções (proxíma aula!). Quando
 você executa um comando no shell, você está escrevendo um pequeno pedaço
 de código que seu shell interpreta. Se você digita um comando que o shell
 não reconhece, ele consulta uma _variável de ambiente_ chamada `$PATH` que
-lista quais diretórios o shell deve procurar por programas.
+lista quais diretórios que o shell deve procurar por programas.
 
 ```console
 missing:~$ echo $PATH
@@ -142,26 +142,26 @@ missing:~$ /bin/echo $PATH
 /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ```
 
-Quando rodamos o comando `echo`, o shell entende que deve executar
-o programa `echo`, e então o procura na lista de diretórios separados
-por `:` contidos no `$PATH`. Quando o programa é encontrado, ele é
-executado (desde que o arquivo seja um _executável; mais sobre isso adiante).
-Nós podemos descobrir que arquivo é executado para um devido programa atráves do
-programa `which`. Também podemos ignorar o `$PATH` completamente se digitarmos
-diretamente o _caminho_ do arquivo que queremos executar.
+Quando rodamos o comando `echo`, o shell percebe que deveria executar 
+o programa `echo`, e então procura um arquivo de mesmo nome na lista 
+de diretórios separados por `:` contidos no `$PATH`. Quando encontra, 
+ele roda o arquivo (assumindo que seja _executável_; explicaremos mais 
+sobre isso adiante). Nós podemos descobrir qual arquivo é executado por 
+um determinado programa utilizando o `which`. Nós também podemos ignorar
+o `$PATH` colocando o _caminho_ do arquivo que queremos executar.
 
-## Navigating in the shell
+## Navegando no shell
 
-A path on the shell is a delimited list of directories; separated by `/`
-on Linux and macOS and `\` on Windows. On Linux and macOS, the path `/`
-is the "root" of the file system, under which all directories and files
-lie, whereas on Windows there is one root for each disk partition (e.g.,
-`C:\`). We will generally assume that you are using a Linux filesystem
-in this class. A path that starts with `/` is called an _absolute_ path.
-Any other path is a _relative_ path. Relative paths are relative to the
-current working directory, which we can see with the `pwd` command and
-change with the `cd` command. In a path, `.` refers to the current
-directory, and `..` to its parent directory:
+Um caminho no shell é uma lista delimitada de diretórios; separada por `/` 
+no Linux e no macOS e `\` no Windows. No Linux e macOS, o caminho `/` é a
+raiz do sistema, na qual ficam todos os diretórios e arquivos, enquanto 
+no Windows existe uma raiz para cada partição do disco (`C:\`). Nós 
+geralmente iremos assumir que você está usando um sistema Linux para essa 
+classe. Um caminho que começa com `/` é chamado de caminho _absoluto_. 
+Qualquer outro caminho é um caminho _relativo_. Caminhos relativos são 
+relativos ao atual diretório, no qual podemos ver com o comando`pwd` e mudar 
+utilizando o comando `cd`. Em um caminho, `.` se refere ao diretório atual, 
+e `..` ao seu diretório pai:
 
 ```console
 missing:~$ pwd
@@ -182,15 +182,15 @@ missing:~$ ../../bin/echo hello
 hello
 ```
 
-Notice that our shell prompt kept us informed about what our current
-working directory was. You can configure your prompt to show you all
-sorts of useful information, which we will cover in a later lecture.
+Note que nosso shell sempre nos mantém informado sobre qual era nosso diretório atual. 
+Você pode configurar o terminal para mostrar todo o tipo de informação útil, iremos 
+falar sobre isso mais adiante.
 
-In general, when we run a program, it will operate in the current
-directory unless we tell it otherwise. For example, it will usually
-search for files there, and create new files there if it needs to.
+Geralmente, iremos rodar um programa, e ele irá operar no diretório atual a não ser 
+que indiquemos outro diretório. Por exemplo, geralmente irá procurar por arquivos
+no diretório atual, e criará arquivos ali se for necessário.
 
-To see what lives in a given directory, we use the `ls` command:
+Para ver o que existe no atual diretório, usamos o comando `ls`:
 
 ```console
 missing:~$ ls
@@ -207,12 +207,11 @@ home
 ...
 ```
 
-Unless a directory is given as its first argument, `ls` will print the
-contents of the current directory. Most commands accept flags and
-options (flags with values) that start with `-` to modify their
-behavior. Usually, running a program with the `-h` or `--help` flag
-will print some help text that tells you what flags
-and options are available. For example, `ls --help` tells us:
+A não ser que um diretório seja passado como primeiro argumento, `ls` irá imrpimir na tela
+os conteúdos do atual diretório. A maioria dos comandos aceitam flags e opções (flags com 
+valores) que comecem com `-` para modificar o seu comportamento. Geralmente rodar um 
+programa com `-h` ou `--help` irá trazer algum texto destinado a ajudar o usuário e explicar 
+quais flags e opções estão disponíveis. Por exemplo, `ls --help` nos diz:
 
 ```
   -l                         use a long listing format
@@ -223,29 +222,26 @@ missing:~$ ls -l /home
 drwxr-xr-x 1 missing  users  4096 Jun 15  2019 missing
 ```
 
-This gives us a bunch more information about each file or directory
-present. First, the `d` at the beginning of the line tells us that
-`missing` is a directory. Then follow three groups of three characters
-(`rwx`). These indicate what permissions the owner of the file
-(`missing`), the owning group (`users`), and everyone else respectively
-have on the relevant item. A `-` indicates that the given principal does
-not have the given permission. Above, only the owner is allowed to
-modify (`w`) the `missing` directory (i.e., add/remove files in it). To
-enter a directory, a user must have "search" (represented by "execute":
-`x`) permissions on that directory (and its parents). To list its
-contents, a user must have read (`r`) permissions on that directory. For
-files, the permissions are as you would expect. Notice that nearly all
-the files in `/bin` have the `x` permission set for the last group,
-"everyone else", so that anyone can execute those programs.
+Isso nos traz bastante informações sobre cada arquivo ou diretório presente. 
+Primeiro, o `d` no início da linha nos diz que `missing` é um diretório. Então os 
+três seguintes grupos de caracteres (`rwx`) indicam quais as permissões o dono do 
+diretório (`missing`), o grupo atual (`users`), e todo o resto respectivamente tem 
+em relação ao item. Uma `-` indica que atualmente não há permissão para fazer tal 
+ação. Acima, apenas o dono é que consegue alterar (`w`) o diretório `missing` 
+(adicionar/remover arquivos). Para entrar em um diretório, o usuário precisa ter a 
+permissão de "procurar" (representada por "execute":`x`) naquele diretório (e nos 
+seus diretórios pais). Para listar os seus conteúdos, o usuário precisa ter a 
+permissão de leitura (`r`) naquele diretório. Para arquivos, as permissões necessitam 
+ser as mesmas. Note que praticamente todos os arquivos em `/bin` tem a permissão de `x`,
+que indicada para o último grupo, "todos os outros", que o arquivo é um executável.
 
-Some other handy programs to know about at this point are `mv` (to
-rename/move a file), `cp` (to copy a file), and `mkdir` (to make a new
-directory).
+Alguns outros programas muito úteis para se saber nesse ponto são o `mv` (para renomear/mover
+um arquivo), `cp` (para copiar um arquivo), e `mkdir` (para fazer um novo diretório).
 
-If you ever want _more_ information about a program's arguments, inputs,
-outputs, or how it works in general, give the `man` program a try. It
-takes as an argument the name of a program, and shows you its _manual
-page_. Press `q` to exit.
+Se você quiser _mais_ informação sobre os argumentos de um programa, entradas, saídas, ou 
+como ele funciona no geral, experimente o programa `man`. Ele leva como argumento o 
+nome do programa que deseja saber mais informações, e mostra o seu _manual_. Pressione `q` 
+para sair.
 
 ```console
 missing:~$ man ls
