@@ -10,22 +10,22 @@ video:
 
 Nessa aula vamos ver várias maneiras para melhorar o seu ambiente de trabalho ao usar o _shell_. Já estamos trabalhando com o _shell_ há um tempo, mas focamos principalmente em executar diferentes comandos. Agora vamos ver como executar diferentes processos ao mesmo tempo enquanto observamos o seu funcionamento, como parar ou pausar um processo específico e como fazer um processo funcionar em segundo plano.
 
-Também vamos aprender diferentes maneiras para melhorar o seu _shell_ e outras ferramentas, ao definir apelidos e configurá-las utilizando _dotfiles_. Ambas ambordagens podem lhe ajudar a poupar tempo, ao por exemplo utilizar a mesma configuração em todas as suas máquinas sem ter que digitar longos comandos. Vamos ver como trabalhar em máquinas remotas utilizando SSH.
+Também vamos aprender diferentes maneiras para melhorar o seu _shell_ e outras ferramentas, ao definir apelidos e configurá-las utilizando _dotfiles_. Ambas ambordagens podem lhe ajudar a poupar tempo, ao por exemplo utilizar a mesma configuração em todas as suas máquinas sem ter que digitar longos comandos. Tambpém vamos ver como trabalhar em máquinas remotas utilizando SSH.
 
 
 # Controle de processos
 
-Em alguns casos você precisará interromper um processo enquanto ele está executando, como por exemplo quando um comando está demorando muito para finalizar a sua execução (como um `find` que precisará percorrer uma estrutura de diretórios muito grande).
+Em alguns casos você precisará interromper um processo enquanto ele está executando, por exemplo: quando um comando está demorando muito para finalizar a sua execução (como um `find` que precisará percorrer uma estrutura de diretórios muito grande).
 Na maioria dos casos, você pode pressionar `Ctrl-C` e o comando será interrompido.
 Mas como isso funciona de fato e por que às vezes isso não é suficiente para parar o processo?
 
 ## Matando um processo
 
-O seu _shell_ está utilzando um mecanismo de comunicação do UNIX chamado _sinal_ para passar informações ao processo. Quando um processo recebe um sinal ele para a sua execução, interpreta o sinal e potencialmente modifica o seu fluxo de execução baseado na informação passada pelo sinal. Por essa razão, sinais são _interruptores de software_.
+O seu _shell_ está utilzando um mecanismo de comunicação do UNIX chamado _sinal_ para passar informações ao processo. Quando um processo recebe um sinal, ele para a sua execução, interpreta o sinal e potencialmente modifica o seu fluxo de execução baseado na informação passada pelo sinal. Por essa razão, sinais são _interruptores de software_.
 
-No seu caso, quando `Ctrl-C` é pressionado, isso indica ao _shell_ para passar um sinal `SIGINT` para o processo.
+Nesse caso, quando `Ctrl-C` é pressionado, isso indica ao _shell_ para passar um sinal `SIGINT` para o processo.
 
-Aqui está um exemplo mínimo de um programa Python que capture um sinal `SIGINT` e o ignora, não mais interrompendo a sua execução ao recebê-lo. Para matar esse programa nos podemos utilizar o sinal `SIGQUIT`, em contrapartida, ao digitar `Ctrl-\`.
+Aqui está um exemplo mínimo de um programa Python que capture um sinal `SIGINT` e o ignora, não mais interrompendo a sua execução ao recebê-lo. Para matar esse programa nós podemos utilizar o sinal `SIGQUIT` ao digitar `Ctrl-\`.
 
 ```python
 #!/usr/bin/env python
@@ -130,13 +130,13 @@ Ao usar a interface de linha de comando você frequentemente vai querer executar
 Por exemplo, você pode querer executar um editor e um programa lado a lado.
 Apesar de isso poder ser feito ao abrir novas janelas de terminal, utilizar um multiplexador de terminais é uma solução mais versátil.
 
-Multiplexadores de terminais como o [`tmux`](https://www.man7.org/linux/man-pages/man1/tmux.1.html) lhe ermitem mutiplexar janelas de terminais utilizando painéis e abas de maneira que você possa interagir com diferentes _shells_ em diferentes sessões.
+Multiplexadores de terminais como o [`tmux`](https://www.man7.org/linux/man-pages/man1/tmux.1.html) lhe permitem mutiplexar janelas de terminais utilizando painéis e abas de maneira que você possa interagir com diferentes _shells_ em diferentes sessões.
 Ademais, os multiplexadores de terminais permitem que você desmonte uma sessão atual e a monte novamente em algum momento futuro.
-Isso pode fazer o seu fluxo de trabalho muito melhor ao trabalhar com máquinas remotas, pelo fato de evitar a necessidade de utilizar o comando `nohup` e outros truques semelhantes.
+Isso pode melhorar muito o seu fluxo de trabalho ao trabalhar com máquinas remotas, pelo fato de evitar a necessidade de utilizar o comando `nohup` e outros truques semelhantes.
 
 O multiplexador de terminais mais popular hoje em dia é o [`tmux`](https://www.man7.org/linux/man-pages/man1/tmux.1.html). O `tmux` é altamente configurável e ao utilizar os seus atalhos do teclado você pode criar múltiplas abas e painéis e navegar rapidamente entre eles.
 
-O `tmux` espera que você conheça os seus atalhos do teclado. Todos eles tem o formato `<C-b> x`, em que isso significa (1) pressionar `Ctrl+b`, (2) soltar `Ctrl+b`, e então (3) pressionar `x`. O `tmux` tem a seguinte hierarquia de objetos:
+O `tmux` espera que você conheça os seus atalhos do teclado. Todos eles tem o formato `<C-b> x`, que isso significa (1) pressionar `Ctrl+b`, (2) soltar `Ctrl+b`, e então (3) pressionar `x`. O `tmux` tem a seguinte hierarquia de objetos:
 - **Sessões$** - uma sessão é um espaço de trabalho independente com uma ou mais janelas
     + O comando `tmux` inicia uma nova sessão
     + `tmux new -s NOME` a inicia com o nome especificado
@@ -161,11 +161,11 @@ O `tmux` espera que você conheça os seus atalhos do teclado. Todos eles tem o 
     + `<C-b> <space>` Passar por diferentes disposições dos painéis
 
 Para referência, 
-[aqui](https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/) está um tutorial rápido do `tmux` e [aqui](http://linuxcommand.org/lc3_adv_termmux.php) você pode ver uma explicação mais detalhada que cobre o comando original `screen`. Talvez você também queira se conhecer [`screen`](https://www.man7.org/linux/man-pages/man1/screen.1.html), já que ele vem instalado na maioria dos sistemas UNIX.
+[aqui](https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/) está um tutorial rápido do `tmux` e [aqui](http://linuxcommand.org/lc3_adv_termmux.php) você pode ver uma explicação mais detalhada que cobre o comando original `screen`. Talvez você também queira se familiarizar ao [`screen`](https://www.man7.org/linux/man-pages/man1/screen.1.html), já que ele vem instalado na maioria dos sistemas UNIX.
 
 # Apelidos
 
-Escrever longos comandos que envolvem muitos parâmetros e opções verbosas pode ser cansativo.
+Escrever longos comandos que envolvem muitos parâmetros e opções prolixas pode ser cansativo.
 Por essa razão, muitos _shells_ permitem a criação de _apelidos_.
 Um apelido do shell é uma representação mais curta para outro comando que o _shell_ irá substituir automaticamente para você.
 Por exemplo, um apelido no _bash_ tem a seguinte estrutura:
@@ -191,9 +191,9 @@ alias v="vim"
 alias sl=ls
 
 # Sobrescrever comandos existents para um melhor comportamento padrão
-alias mv="mv -i"           # -i prompts before overwrite
-alias mkdir="mkdir -p"     # -p make parent dirs as needed
-alias df="df -h"           # -h prints human readable format
+alias mv="mv -i"           # -i perguntar antes de sobreescrever
+alias mkdir="mkdir -p"     # -p cria diretórios pais conforme necessário
+alias df="df -h"           # -h imprime em formáto legível para humanos
 
 # Apelidos podem ser compostos
 alias la="ls -A"
