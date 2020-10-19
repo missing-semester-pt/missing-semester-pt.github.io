@@ -8,24 +8,24 @@ video:
   id: e8BO_dYxk5c
 ---
 
-In this lecture we will go through several ways in which you can improve your workflow when using the shell. We have been working with the shell for a while now, but we have mainly focused on executing different commands. We will now see how to run several processes at the same time while keeping track of them, how to stop or pause a specific process and how to make a process run in the background.
+Nessa aula vamos ver várias maneiras para melhorar o seu ambiente de trabalho ao usar o _shell_. Já estamos trabalhando com o _shell_ há um tempo, mas focamos principalmente em executar diferentes comandos. Agora vamos ver como executar diferentes processos ao mesmo tempo enquanto observamos o seu funcionamento, como parar ou pausar um processo específico e como fazer um processo funcionar em segundo plano.
 
-We will also learn about different ways to improve your shell and other tools, by defining aliases and configuring them using dotfiles. Both of these can help you save time, e.g. by using the same configurations in all your machines without having to type long commands. We will look at how to work with remote machines using SSH.
+Também vamos aprender diferentes maneiras para melhorar o seu _shell_ e outras ferramentas, ao definir apelidos e configurá-las utilizando _dotfiles_. Ambas ambordagens podem lhe ajudar a poupar tempo, ao por exemplo utilizar a mesma configuração em todas as suas máquinas sem ter que digitar longos comandos. Tambpém vamos ver como trabalhar em máquinas remotas utilizando SSH.
 
 
-# Job Control
+# Controle de processos
 
-In some cases you will need to interrupt a job while it is executing, for instance if a command is taking too long to complete (such as a `find` with a very large directory structure to search through).
-Most of the time, you can do `Ctrl-C` and the command will stop.
-But how does this actually work and why does it sometimes fail to stop the process?
+Em alguns casos você precisará interromper um processo enquanto ele está executando, por exemplo: quando um comando está demorando muito para finalizar a sua execução (como um `find` que precisará percorrer uma estrutura de diretórios muito grande).
+Na maioria dos casos, você pode pressionar `Ctrl-C` e o comando será interrompido.
+Mas como isso funciona de fato e por que às vezes isso não é suficiente para parar o processo?
 
-## Killing a process
+## Matando um processo
 
-Your shell is using a UNIX communication mechanism called a _signal_ to communicate information to the process. When a process receives a signal it stops its execution, deals with the signal and potentially changes the flow of execution based on the information that the signal delivered. For this reason, signals are _software interrupts_.
+O seu _shell_ está utilzando um mecanismo de comunicação do UNIX chamado _sinal_ para passar informações ao processo. Quando um processo recebe um sinal, ele para a sua execução, interpreta o sinal e potencialmente modifica o seu fluxo de execução baseado na informação passada pelo sinal. Por essa razão, sinais são _interruptores de software_.
 
-In our case, when typing `Ctrl-C` this prompts the shell to deliver a `SIGINT` signal to the process.
+Nesse caso, quando `Ctrl-C` é pressionado, isso indica ao _shell_ para passar um sinal `SIGINT` para o processo.
 
-Here's a minimal example of a Python program that captures `SIGINT` and ignores it, no longer stopping. To kill this program we can now use the `SIGQUIT` signal instead, by typing `Ctrl-\`.
+Aqui está um exemplo mínimo de um programa Python que capture um sinal `SIGINT` e o ignora, não mais interrompendo a sua execução ao recebê-lo. Para matar esse programa nós podemos utilizar o sinal `SIGQUIT` ao digitar `Ctrl-\`.
 
 ```python
 #!/usr/bin/env python
@@ -42,7 +42,7 @@ while True:
     i += 1
 ```
 
-Here's what happens if we send `SIGINT` twice to this program, followed by `SIGQUIT`. Note that `^` is how `Ctrl` is displayed when typed in the terminal.
+Isso que acontece se mandarmos um sinal `SIGINT` duas vezes para esse programa, seguidos de um `SIGQUIT`. Note que `^` é como `Ctrl` é mostrado quando digitado no terminal.
 
 ```
 $ python sigint.py
@@ -53,27 +53,27 @@ I got a SIGINT, but I am not stopping
 30^\[1]    39913 quit       python sigint.py
 ```
 
-While `SIGINT` and `SIGQUIT` are both usually associated with terminal related requests, a more generic signal for asking a process to exit gracefully is the `SIGTERM` signal.
-To send this signal we can use the [`kill`](https://www.man7.org/linux/man-pages/man1/kill.1.html) command, with the syntax `kill -TERM <PID>`.
+Enquanto ambos `SIGINT` e `SIGQUIT` são normalmente associados com requisições relacionadas ao terminal, um sinal mais genérico para demandar o fim de um processo é o sinal `SIGTERM`.
+Para mandar esse sinal podemos utilizar o comando [`kill`](https://www.man7.org/linux/man-pages/man1/kill.1.html), com a sintaxe `kill -TERM <PID>`.
 
-## Pausing and backgrounding processes
+## Pausando e colocando processos em segundo plano
 
-Signals can do other things beyond killing a process. For instance, `SIGSTOP` pauses a process. In the terminal, typing `Ctrl-Z` will prompt the shell to send a `SIGTSTP` signal, short for Terminal Stop (i.e. the terminal's version of `SIGSTOP`).
+Sinais podem fazer outras coisas além de matar processos. Por exemplo, `SIGSTOP` pausa um processo. No terminal, pressionar `Ctrl-Z` irá requisitar ao _shell_ para enviar um sinal `SIGTSTP`, que é uma abreaviação para _Terminal Stop_ (a versão do terminal para `SIGSTOP`).
 
-We can then continue the paused job in the foreground or in the background using [`fg`](https://www.man7.org/linux/man-pages/man1/fg.1p.html) or [`bg`](http://man7.org/linux/man-pages/man1/bg.1p.html), respectively.
+O processo pausado pode ser então continuado em primeiro ou segundo plano utilizando [`fg`](https://www.man7.org/linux/man-pages/man1/fg.1p.html) ou [`bg`](http://man7.org/linux/man-pages/man1/bg.1p.html), respectivamente.
 
-The [`jobs`](https://www.man7.org/linux/man-pages/man1/jobs.1p.html) command lists the unfinished jobs associated with the current terminal session.
-You can refer to those jobs using their pid (you can use [`pgrep`](https://www.man7.org/linux/man-pages/man1/pgrep.1.html) to find that out).
-More intuitively, you can also refer to a process using the percent symbol followed by its job number (displayed by `jobs`). To refer to the last backgrounded job you can use the `$!` special parameter.
+O comando [`jobs`](https://www.man7.org/linux/man-pages/man1/jobs.1p.html) lista os processos não finalizados associados com a sessão atual do terminal.
+Você pode se referir a esses processos utilizando o pid deles (você pode utilizar o comando [`pgrep`](https://www.man7.org/linux/man-pages/man1/pgrep.1.html) para descobrí-los).
+De maneira mais intuitiva, você também pode referir a um processo utilizando o símbolo de porcentagem seguido do seu número identificador (indicado por `jobs`). Para se referir ao último processo que foi posto em segundo plano você pode utilizar o parâmetro especial `$!`.
 
-One more thing to know is that the `&` suffix in a command will run the command in the background, giving you the prompt back, although it will still use the shell's STDOUT which can be annoying (use shell redirections in that case).
+Outra coisa importante é que utilizar o sufixo `&` em um comando vai executá-lo em segundo plano, lhe dando o controle do terminal de volta. No entanto, esse comando ainda vai utilizar a saída padrão (STDOUT) do _shell_, o que pode incomodar (você pode utilizar redirecionamentos do _shell_ nesse caso).
 
-To background an already running program you can do `Ctrl-Z` followed by `bg`.
-Note that backgrounded processes are still children processes of your terminal and will die if you close the terminal (this will send yet another signal, `SIGHUP`).
-To prevent that from happening you can run the program with [`nohup`](https://www.man7.org/linux/man-pages/man1/nohup.1.html) (a wrapper to ignore `SIGHUP`), or use `disown` if the process has already been started.
-Alternatively, you can use a terminal multiplexer as we will see in the next section.
+Para colocar em segundo plano um processo que já está rodando você pode pressionar `Ctrl-Z`, e executar o comando `bg` em seguida.
+Note que processos em segundo plano ainda são processos filhos do seu terminal e vão morrer se você fechá-lo (isso enviará um outro sinal, `SIGHUP`).
+Para evitar que isso aconteça você pode executar o programa com [`nohup`](https://www.man7.org/linux/man-pages/man1/nohup.1.html) (um _wrapper_ para ignorar `SIGHUP`), ou utilizar `disown` se o processo já foi iniciado.
+Como outra alternativa, você pode utilizar um multiplexador de terminais, como veremos na próxima seção.
 
-Below is a sample session to showcase some of these concepts.
+Abaixo é demonstrada uma sessão de exemplo para ilustrar alguns desses conceitos.
 
 ```
 $ sleep 1000
@@ -120,98 +120,97 @@ $ jobs
 
 ```
 
-A special signal is `SIGKILL` since it cannot be captured by the process and it will always terminate it immediately. However, it can have bad side effects such as leaving orphaned children processes.
+Um sinal especial é o `SIGKILL`, porque ele não pode ser capturado pelo processo e sempre o terminará imediatamente. No entanto, isso pode ter efeitos colaterais indesejados, como originar processos órfãos.
 
-You can learn more about these and other signals [here](https://en.wikipedia.org/wiki/Signal_(IPC)) or typing [`man signal`](https://www.man7.org/linux/man-pages/man7/signal.7.html) or `kill -t`.
+Você pode aprender mais sobre esses e outros sinais [aqui](https://en.wikipedia.org/wiki/Signal_(IPC)), executando o comando [`man signal`](https://www.man7.org/linux/man-pages/man7/signal.7.html), ou `kill -t`.
 
+# Multiplexadores de terminais
 
-# Terminal Multiplexers
+Ao usar a interface de linha de comando você frequentemente vai querer executar mais de uma coisa ao mesmo tempo.
+Por exemplo, você pode querer executar um editor e um programa lado a lado.
+Apesar de isso poder ser feito ao abrir novas janelas de terminal, utilizar um multiplexador de terminais é uma solução mais versátil.
 
-When using the command line interface you will often want to run more than one thing at once.
-For instance, you might want to run your editor and your program side by side.
-Although this can be achieved by opening new terminal windows, using a terminal multiplexer is a more versatile solution.
+Multiplexadores de terminais como o [`tmux`](https://www.man7.org/linux/man-pages/man1/tmux.1.html) lhe permitem mutiplexar janelas de terminais utilizando painéis e abas de maneira que você possa interagir com diferentes _shells_ em diferentes sessões.
+Ademais, os multiplexadores de terminais permitem que você desmonte uma sessão atual e a monte novamente em algum momento futuro.
+Isso pode melhorar muito o seu fluxo de trabalho ao trabalhar com máquinas remotas, pelo fato de evitar a necessidade de utilizar o comando `nohup` e outros truques semelhantes.
 
-Terminal multiplexers like [`tmux`](https://www.man7.org/linux/man-pages/man1/tmux.1.html) allow you to multiplex terminal windows using panes and tabs so you can interact with multiple shell sessions.
-Moreover, terminal multiplexers let you detach a current terminal session and reattach at some point later in time.
-This can make your workflow much better when working with remote machines since it avoids the need to use `nohup` and similar tricks.
+O multiplexador de terminais mais popular hoje em dia é o [`tmux`](https://www.man7.org/linux/man-pages/man1/tmux.1.html). O `tmux` é altamente configurável e ao utilizar os seus atalhos do teclado você pode criar múltiplas abas e painéis e navegar rapidamente entre eles.
 
-The most popular terminal multiplexer these days is [`tmux`](https://www.man7.org/linux/man-pages/man1/tmux.1.html). `tmux` is highly configurable and by using the associated keybindings you can create multiple tabs and panes and quickly navigate through them.
+O `tmux` espera que você conheça os seus atalhos do teclado. Todos eles tem o formato `<C-b> x`, que isso significa (1) pressionar `Ctrl+b`, (2) soltar `Ctrl+b`, e então (3) pressionar `x`. O `tmux` tem a seguinte hierarquia de objetos:
+- **Sessões$** - uma sessão é um espaço de trabalho independente com uma ou mais janelas
+    + O comando `tmux` inicia uma nova sessão
+    + `tmux new -s NOME` a inicia com o nome especificado
+    + `tmux ls` lista as sessões abertas
+    + Dentro do `tmux`, pressionar `<C-b> d` desmonta a sessão atual
+    + `tmux a` monta a última sessão. Você pode utilizar o parâmetro `-t` para especificar qual
 
-`tmux` expects you to know its keybindings, and they all have the form `<C-b> x` where that means (1) press `Ctrl+b`, (2) release `Ctrl+b`, and then (3) press `x`. `tmux` has the following hierarchy of objects:
-- **Sessions** - a session is an independent workspace with one or more windows
-    + `tmux` starts a new session.
-    + `tmux new -s NAME` starts it with that name.
-    + `tmux ls` lists the current sessions
-    + Within `tmux` typing `<C-b> d`  detaches the current session
-    + `tmux a` attaches the last session. You can use `-t` flag to specify which
+- **Janelas** - Equivalente a abas em editores ou navegadores, elas são partes visualmente separadas dentro de uma mesma sessão
+    + `<C-b> c` Cria uma nova janela. Para fechá-la basta finalizar o _shell_ pressionando `<C-d>`
+    + `<C-b> N` Vai para a _N_-ésima janela. Note que elas são numeradas
+    + `<C-b> p` Vai para a janela anterior
+    + `<C-b> n` Vai para a próxima janela
+    + `<C-b> ,` Renomeia a janela atual
+    + `<C-b> w` Lista as janelas existentes
 
-- **Windows** - Equivalent to tabs in editors or browsers, they are visually separate parts of the same session
-    + `<C-b> c` Creates a new window. To close it you can just terminate the shells doing `<C-d>`
-    + `<C-b> N` Go to the _N_ th window. Note they are numbered
-    + `<C-b> p` Goes to the previous window
-    + `<C-b> n` Goes to the next window
-    + `<C-b> ,` Rename the current window
-    + `<C-b> w` List current windows
+- **Painéis** - Assim como _splits_ no vim, painéis permitem que você tenha múltiplos _shells_ dividindo o espaço visual do seu terminal.
+    + `<C-b> "` Divide o painel atual na direção horizontal
+    + `<C-b> %` Divide o painel atual na vertical
+    + `<C-b> <direção>` Mover para o painel na _direção_ especificada. A direção é indicada pelas teclas de setas
+    + `<C-b> z` Ativa o _zoom_ no painel atual
+    + `<C-b> [` Inicia o _scrollback_. Você pode pressionar `<espaço>` para iniciar uma seleção e `<enter>` para copiar essa seleção.
+    + `<C-b> <space>` Passar por diferentes disposições dos painéis
 
-- **Panes** - Like vim splits, panes let you have multiple shells in the same visual display.
-    + `<C-b> "` Split the current pane horizontally
-    + `<C-b> %` Split the current pane vertically
-    + `<C-b> <direction>` Move to the pane in the specified _direction_. Direction here means arrow keys.
-    + `<C-b> z` Toggle zoom for the current pane
-    + `<C-b> [` Start scrollback. You can then press `<space>` to start a selection and `<enter>` to copy that selection.
-    + `<C-b> <space>` Cycle through pane arrangements.
+Para referência, 
+[aqui](https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/) está um tutorial rápido do `tmux` e [aqui](http://linuxcommand.org/lc3_adv_termmux.php) você pode ver uma explicação mais detalhada que cobre o comando original `screen`. Talvez você também queira se familiarizar ao [`screen`](https://www.man7.org/linux/man-pages/man1/screen.1.html), já que ele vem instalado na maioria dos sistemas UNIX.
 
-For further reading,
-[here](https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/) is a quick tutorial on `tmux` and [this](http://linuxcommand.org/lc3_adv_termmux.php) has a more detailed explanation that covers the original `screen` command. You might also want to familiarize yourself with [`screen`](https://www.man7.org/linux/man-pages/man1/screen.1.html), since it comes installed in most UNIX systems.
+# Apelidos
 
-# Aliases
-
-It can become tiresome typing long commands that involve many flags or verbose options.
-For this reason, most shells support _aliasing_.
-A shell alias is a short form for another command that your shell will replace automatically for you.
-For instance, an alias in bash has the following structure:
+Escrever longos comandos que envolvem muitos parâmetros e opções prolixas pode ser cansativo.
+Por essa razão, muitos _shells_ permitem a criação de _apelidos_.
+Um apelido do shell é uma representação mais curta para outro comando que o _shell_ irá substituir automaticamente para você.
+Por exemplo, um apelido no _bash_ tem a seguinte estrutura:
 
 ```bash
-alias alias_name="command_to_alias arg1 arg2"
+alias nome_do_apelido="comando_abreviado arg1 arg2"
 ```
 
-Note that there is no space around the equal sign `=`, because [`alias`](https://www.man7.org/linux/man-pages/man1/alias.1p.html) is a shell command that takes a single argument.
+Observe que não há espaços em volta do sinal de igual `=`, porque [`alias`](https://www.man7.org/linux/man-pages/man1/alias.1p.html) é um comando que recebe um único argumento.
 
-Aliases have many convenient features:
+Apelidos tem várias funcionalidades convenientes:
 
 ```bash
-# Make shorthands for common flags
+# Fazer atalhos para parâmetros comuns
 alias ll="ls -lh"
 
-# Save a lot of typing for common commands
+# Digitar menos em comandos comuns
 alias gs="git status"
 alias gc="git commit"
 alias v="vim"
 
-# Save you from mistyping
+# Driblar problemas causados por erros de digitação
 alias sl=ls
 
-# Overwrite existing commands for better defaults
-alias mv="mv -i"           # -i prompts before overwrite
-alias mkdir="mkdir -p"     # -p make parent dirs as needed
-alias df="df -h"           # -h prints human readable format
+# Sobrescrever comandos existents para um melhor comportamento padrão
+alias mv="mv -i"           # -i perguntar antes de sobreescrever
+alias mkdir="mkdir -p"     # -p cria diretórios pais conforme necessário
+alias df="df -h"           # -h imprime em formáto legível para humanos
 
-# Alias can be composed
+# Apelidos podem ser compostos
 alias la="ls -A"
 alias lla="la -l"
 
-# To ignore an alias run it prepended with \
+# Para ignorar um apelido execute o comando prefixado por um \
 \ls
-# Or disable an alias altogether with unalias
+# Ou desative o apelido com o comando `unalias`
 unalias la
 
-# To get an alias definition just call it with alias
+# Para obter a definição de um apelido chame-o com o comando `alias`
 alias ll
-# Will print ll='ls -lh'
+# Imprimirá ll='ls -lh'
 ```
 
-Note that aliases do not persist shell sessions by default.
-To make an alias persistent you need to include it in shell startup files, like `.bashrc` or `.zshrc`, which we are going to introduce in the next section.
+Note também que apelidos não persistem por sessões do _shell_ por padrão.
+Para fazer que um apelido seja persistente, você precisa incluí-lo em arquivos de inicialização do _shell_, como `.bashrc` ou `.zshrc`, que vão ser introduzidos na próxima seção.
 
 
 # Dotfiles
