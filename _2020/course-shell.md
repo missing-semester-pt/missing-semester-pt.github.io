@@ -238,7 +238,7 @@ que indicada para o último grupo, "todos os outros", que o arquivo é um execut
 Alguns outros programas muito úteis para se saber nesse ponto são o `mv` (para renomear/mover
 um arquivo), `cp` (para copiar um arquivo), e `mkdir` (para fazer um novo diretório).
 
-Se você quiser _mais_ informação sobre os argumentos de um programa, entradas, saídas, ou 
+Se você quiser _mais_ informações sobre os argumentos de um programa, entradas, saídas, ou 
 como ele funciona no geral, experimente o programa `man`. Ele leva como argumento o 
 nome do programa que deseja saber mais informações, e mostra o seu _manual_. Pressione `q` 
 para sair.
