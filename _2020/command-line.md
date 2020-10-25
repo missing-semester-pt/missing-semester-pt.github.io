@@ -251,41 +251,36 @@ Todos os instrutores das aulas tem os seus _dotfiles_ disponibilizados no GitHub
 [Jon](https://github.com/jonhoo/configs),
 [Jose](https://github.com/jjgo/dotfiles).
 
-## Portability
+## Portabilidade
 
-A common pain with dotfiles is that the configurations might not work when working with several machines, e.g. if they have different operating systems or shells. Sometimes you also want some configuration to be applied only in a given machine.
+Um problema comum com _dotfiles_ é que as suas configurações podemo não funcionar quando se trabalha em diferentes máquinas, como por exemplo se essas máquinas tiverem diferentes sistemas operacionais ou _shells_. Às vezes você também pode querer que determinada configuração seja aplicada somente a uma determinada máquina.
 
-There are some tricks for making this easier.
-If the configuration file supports it, use the equivalent of if-statements to
-apply machine specific customizations. For example, your shell could have something
-like:
+Existem alguns truques para que isso seja mais fácil de se realizar.
+Se o arquivo de configuração dá suporte a isso, use o equivalentea expressões if-else para aplicar customizações para máquinas especificas. Por exemplo, o seu _shell_ pode ter algo como o seguinte: 
 
 ```bash
-if [[ "$(uname)" == "Linux" ]]; then {do_something}; fi
+if [[ "$(uname)" == "Linux" ]]; then {faca_algo}; fi
 
 # Check before using shell-specific features
-if [[ "$SHELL" == "zsh" ]]; then {do_something}; fi
+if [[ "$SHELL" == "zsh" ]]; then {faca_algo}; fi
 
 # You can also make it machine-specific
-if [[ "$(hostname)" == "myServer" ]]; then {do_something}; fi
+if [[ "$(hostname)" == "meuServidor" ]]; then {faca_algo}; fi
 ```
 
-If the configuration file supports it, make use of includes. For example,
-a `~/.gitconfig` can have a setting:
+Se o arquivo de configuração der suporte, você pode utilizar _includes_. Por exemplo, um arquivo `~/.gitconfig` pode ter a seguinte configuração:
 
 ```
 [include]
     path = ~/.gitconfig_local
 ```
 
-And then on each machine, `~/.gitconfig_local` can contain machine-specific
-settings. You could even track these in a separate repository for
-machine-specific settings.
+Então em cada máquina, o arquivo `~/.gitconfig_local` pode conter configurações especificas de cada máquina. Você pode até gerenciar esses arquivos em um repositório separado para configurações específicas.
 
-This idea is also useful if you want different programs to share some configurations. For instance, if you want both `bash` and `zsh` to share the same set of aliases you can write them under `.aliases` and have the following block in both:
+Essa ideia também é útil caso você queira que diferentes programas compartilhem algumas configurações. Por exemplo, se você quiser que ambos os _shells_ `zsh` e `bash` compartilhem o mesmo conjunto de apelidos você pode escrevê-los em um arquivo `.aliases` e ter o seguinte bloco em ambos:
 
 ```bash
-# Test if ~/.aliases exists and source it
+# Testa se ~/.aliases existe e o carrega
 if [ -f ~/.aliases ]; then
     source ~/.aliases
 fi
