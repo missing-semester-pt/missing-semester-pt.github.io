@@ -286,86 +286,87 @@ if [ -f ~/.aliases ]; then
 fi
 ```
 
-# Remote Machines
+# Máquinas Remotas
 
-It has become more and more common for programmers to use remote servers in their everyday work. If you need to use remote servers in order to deploy backend software or you need a server with higher computational capabilities, you will end up using a Secure Shell (SSH). As with most tools covered, SSH is highly configurable so it is worth learning about it.
+É cada vez mais comum para programadores utilizar servidores remoto no dia-a-dia. Se você precisa utilzar servidores remotos para realizar a implantação de um _software backend_ ou se você de um servidor com um maior poder computacional, você provavelmente utilizará _Secure Shell_ (SSH). Assim como a maioria das ferramentas aqui demonstradas, SSH é altamente configurável, então vale a pena aprender mais sobre isso.
 
-To `ssh` into a server you execute a command as follows
+Para entrar com `ssh` em um servidor você precisa executar o seguinte comando
 
 ```bash
 ssh foo@bar.mit.edu
 ```
 
-Here we are trying to ssh as user `foo` in server `bar.mit.edu`.
-The server can be specified with a URL (like `bar.mit.edu`) or an IP (something like `foobar@192.168.1.42`). Later we will see that if we modify ssh config file you can access just using something like `ssh bar`.
+Aqui estamos tentando entrar com SSH utilizando o usuário `foo` no servidor `bar.mit.edu`.
+O servidor pode ser especificado com uma URL (como `bar.mit.edu`) ou um IP (algo como `foobar@192.168.1.42`). Depois veremos como modificar o arquivo de configuração do SSH para acessar um servidor apenas digitando algo como `ssh bar`.
 
-## Executing commands
+## Executando comandos
 
-An often overlooked feature of `ssh` is the ability to run commands directly.
-`ssh foobar@server ls` will execute `ls` in the home folder of foobar.
-It works with pipes, so `ssh foobar@server ls | grep PATTERN` will grep locally the remote output of `ls` and `ls | ssh foobar@server grep PATTERN` will grep remotely the local output of `ls`.
+Uma funcionalidade do `ssh` frequentemente deixada de lado é a possibilidade de se executar comandos diretamente.
+`ssh foobar@server ls` executar `ls` na pasta raíz de foobar.
+Isso funciona com _pipes_, então `ssh foobar@server ls | grep PATTERN` irá executar o comando `grep` localmente sobre a saída remota de `ls` e `ls | ssh foobar@server grep PATTERN` rodará `grep` remotamente para a saída local de `ls`.
 
+## Chaves SSH
 
-## SSH Keys
+Autenticação baseada em chaves utiliza criptografia de chaves privadas para provar ao servidor que o cliente possui a chave privada secreta sem revelar a chave.
+Dessa maneira, você não precisa reintroduzir a sua senha sempre. De qualquer jeito, a chave privada (frequentemente `~/.ssh/id_rsa` e mais recentemente `~/.ssh/id_ed25519`) é efetivamente a sua senha, então trate-a como tal.
 
-Key-based authentication exploits public-key cryptography to prove to the server that the client owns the secret private key without revealing the key. This way you do not need to reenter your password every time. Nevertheless, the private key (often `~/.ssh/id_rsa` and more recently `~/.ssh/id_ed25519`) is effectively your password, so treat it like so.
+### Geração de chaves
 
-### Key generation
-
-To generate a pair you can run [`ssh-keygen`](https://www.man7.org/linux/man-pages/man1/ssh-keygen.1.html).
+Para gerar um pair de chaves você pode executar [`ssh-keygen`](https://www.man7.org/linux/man-pages/man1/ssh-keygen.1.html).
 ```bash
 ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_ed25519
 ```
-You should choose a passphrase, to avoid someone who gets hold of your private key to access authorized servers. Use [`ssh-agent`](https://www.man7.org/linux/man-pages/man1/ssh-agent.1.html) or [`gpg-agent`](https://linux.die.net/man/1/gpg-agent) so you do not have to type your passphrase every time.
 
-If you have ever configured pushing to GitHub using SSH keys, then you have probably done the steps outlined [here](https://help.github.com/articles/connecting-to-github-with-ssh/) and have a valid key pair already. To check if you have a passphrase and validate it you can run `ssh-keygen -y -f /path/to/key`.
+Você precisa escolher uma senha, para evitar que alguém que obtenha a sua chave privada consiga acessar servidores autorizados. Utilize [`ssh-agent`](https://www.man7.org/linux/man-pages/man1/ssh-agent.1.html) ou [`gpg-agent`](https://linux.die.net/man/1/gpg-agent) para que você não precise digitar a sua senha sempre.
 
-### Key based authentication
+Se alguma vez você configurou a atualização de repositórios do GitHub utilizando chaves SSH, então você provavelmente seguiu os passos listados aqui [aqui](https://help.github.com/articles/connecting-to-github-with-ssh/) e já tem um par de chaves. Para checar se voc6e tem uma senha e validá-la você pode executar `ssh-keygen -y -f /caminho/para/chave`.
 
+### Autenticação baseada em chaves
+
+`ssh` checará `.ssh/authorized_keys` para determinar a que clientes deverá permitir o acesso. Para copiar para esse caminho uma chave pública você pode utilizar:
 `ssh` will look into `.ssh/authorized_keys` to determine which clients it should let in. To copy a public key over you can use:
 
 ```bash
 cat .ssh/id_ed25519.pub | ssh foobar@remote 'cat >> ~/.ssh/authorized_keys'
 ```
 
-A simpler solution can be achieved with `ssh-copy-id` where available:
+Uma solução mais simples pode ser alcançada com `ssh-copy-id`, quando disponível:
 
 ```bash
 ssh-copy-id -i .ssh/id_ed25519.pub foobar@remote
 ```
 
-## Copying files over SSH
+## Copiando arquivos por SSH
 
-There are many ways to copy files over ssh:
+Existem diversas maneiras para copiar arquivos por SSH:
 
-- `ssh+tee`, the simplest is to use `ssh` command execution and STDIN input by doing `cat localfile | ssh remote_server tee serverfile`. Recall that [`tee`](https://www.man7.org/linux/man-pages/man1/tee.1.html) writes the output from STDIN into a file.
-- [`scp`](https://www.man7.org/linux/man-pages/man1/scp.1.html) when copying large amounts of files/directories, the secure copy `scp` command is more convenient since it can easily recurse over paths. The syntax is `scp path/to/local_file remote_host:path/to/remote_file`
-- [`rsync`](https://www.man7.org/linux/man-pages/man1/rsync.1.html) improves upon `scp` by detecting identical files in local and remote, and preventing copying them again. It also provides more fine grained control over symlinks, permissions and has extra features like the `--partial` flag that can resume from a previously interrupted copy. `rsync` has a similar syntax to `scp`.
+- `ssh+tee`, o mais simples é utilizar o comando `ssh` e a entrada STDIN ao executar `cat arquivolocal | ssh servidor_remoto tee arquivoremoto`. Lembre-se que o comando [`tee`](https://www.man7.org/linux/man-pages/man1/tee.1.html) escreve a saída de STDIN em um arquivo.
+- [`scp`](https://www.man7.org/linux/man-pages/man1/scp.1.html), ao copiar grandes conjuntos de arquivos/diretórios o comando de cópia segura `scp` é mais conveniente já que pode passar por diretórios recursivamente. A sintaxe é `scp caminho/para/arquivo_local servidor_remoto:camiho/para/arquivo_remoto`.
+- [`rsync`](https://www.man7.org/linux/man-pages/man1/rsync.1.html) melhora a funcionalidade de `scp` ao detectar arquivos idênticos tanto local quanto remotamente, e prevenindo que eles sejam copiados novamente. Ele também possui um controle mais direcionado sobre links simbólicos, permissões e tem funcionalidades extra como a _flag_ `--partial`, que pode resumir uma cópia interrompida previamente. `rsync` tem uma sintaxe parecida com `scp`.
+- [`rsync`](https://www.man7.org/linux/man-pages/man1/rsync.1.html) melhora a funcionalidade de `scp` para improves upon `scp` by detecting identical files in local and remote, and preventing copying them again. It also provides more fine grained control over symlinks, permissions and has extra features like the `--partial` flag that can resume from a previously interrupted copy. `rsync` has a similar syntax to `scp`.
 
-## Port Forwarding
+## Redirecionamento de portas
 
-In many scenarios you will run into software that listens to specific ports in the machine. When this happens in your local machine you can type `localhost:PORT` or `127.0.0.1:PORT`, but what do you do with a remote server that does not have its ports directly available through the network/internet?.
+Em muitos cenários estarão presentes _softwares_ que funcionam em uma determinada porta da máquina. Quando isso acontece na sua máquina local você pode digitar `localhost:PORTA` ou `127.0.0.1:PORTA`, mas o que você faz quando um servidor remoto não tem suas portas diretamente disponíveis pela rede/internet?
 
-This is called _port forwarding_ and it
-comes in two flavors: Local Port Forwarding and Remote Port Forwarding (see the pictures for more details, credit of the pictures from [this StackOverflow post](https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot)).
+Isso é chamado de _redirecionamento de portas_ e isso pode ser realizado de duas maneiras: Redirecionamento Local de Portas e Redirecionamento Remoto de Portas (veja as figuras em mais detalhes, créditos para as figuras [desse post do StackOverflow](https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot)).
 
-**Local Port Forwarding**
-![Local Port Forwarding](https://i.stack.imgur.com/a28N8.png  "Local Port Forwarding")
+**Redirecionamento Local de Portas**
+![Redirecionamento Local de Portas](https://i.stack.imgur.com/a28N8.png  "Redirecionamento Local de Portas") 
+**Redirecionamento Remoto de Portas**
+![Redirecionamento Remoto de Portas](https://i.stack.imgur.com/4iK3b.png  "Redirecionamento Remoto de Portas")
 
-**Remote Port Forwarding**
-![Remote Port Forwarding](https://i.stack.imgur.com/4iK3b.png  "Remote Port Forwarding")
-
-The most common scenario is local port forwarding, where a service in the remote machine listens in a port and you want to link a port in your local machine to forward to the remote port. For example, if we execute  `jupyter notebook` in the remote server that listens to the port `8888`. Thus, to forward that to the local port `9999`, we would do `ssh -L 9999:localhost:8888 foobar@remote_server` and then navigate to `locahost:9999` in our local machine.
+O cenário mais comum é o redirecionamento local de portas, em que um serviço na máquina remota executa em uma porta e você quer vincular uma porta na sua máquina local para redirecionar para a porta remota. Por exemplo, considere o caso em que executamos `jupyter notebook` no servidor remoto na porta `8888`. Então, para redirecionar para a porta local `9999`, poderíamos executar `ssh -L 9999:localhost:8888 foobar@servidor_remoto` e então navegar para `localhost:9999` na nossa máquina local.
 
 
-## SSH Configuration
+## Configuração SSH
 
-We have covered many many arguments that we can pass. A tempting alternative is to create shell aliases that look like
+Aqui cobrimos muitos argumentos que pode sem passados para o `ssh`. Uma alternatvia tentadora é criar apelidos do _shell_, algo parecido com:
 ```bash
-alias my_server="ssh -i ~/.id_ed25519 --port 2222 -L 9999:localhost:8888 foobar@remote_server
+alias meu_servidor="ssh -i ~/.id_ed25519 --port 2222 -L 9999:localhost:8888 foobar@servidor_remoto
 ```
 
-However, there is a better alternative using `~/.ssh/config`.
+No entanto, existe uma alternativa melhor utilizando `~/.ssh/config`.
 
 ```bash
 Host vm
@@ -375,23 +376,23 @@ Host vm
     IdentityFile ~/.ssh/id_ed25519
     LocalForward 9999 localhost:8888
 
-# Configs can also take wildcards
+# Configurações podem também possuir "wildcards"
 Host *.mit.edu
     User foobaz
 ```
 
-An additional advantage of using the `~/.ssh/config` file over aliases  is that other programs like `scp`, `rsync`, `mosh`, &c are able to read it as well and convert the settings into the corresponding flags.
+Uma vantagem adicional de utilizar o arquivo `~/.ssh/config` ao invés de apelidos é que outros programas como `scp`, `rsync`, `mosh`, etc podem lê-lo assim como converter as configurações nas _flags_ correspondentes.
 
 
-Note that the `~/.ssh/config` file can be considered a dotfile, and in general it is fine for it to be included with the rest of your dotfiles. However, if you make it public, think about the information that you are potentially providing strangers on the internet: addresses of your servers, users, open ports, &c. This may facilitate some types of attacks so be thoughtful about sharing your SSH configuration.
+Note que o arquivo `~/.ssh/config` pode ser considerado um _dotfile_, e em geral não há problema de incluí-lo junto com o restante dos seus _dotfiles_. No entanto, se você deixá-lo disponível publicamente, pense sobre a informação que você está potencialmente disponibilizando a estranhos na internet: endereços dos seus servidores, usuários, portas abertas, etc. Isso pode facilitar tipos de ataques, então pense bem antes de compartilhar a sua configuração do SSH.
 
-Server side configuration is usually specified in `/etc/ssh/sshd_config`. Here you can make changes like disabling password authentication, changing ssh ports, enabling X11 forwarding, &c. You can specify config settings on a per user basis.
+Configuracões do lado do servidor são geralmente especificadas em `/etc/ssh/sshd_config`. Aqui você pode fazer mudanças como desativar autenticação por senha, modificar portas ssh, ativar redirecionamento X11, etc. Você também pode especificar configurações para cada usuário.
 
-## Miscellaneous
+## Diversos
 
-A common pain when connecting to a remote server are disconnections due to shutting down/sleeping your computer or changing a network. Moreover if one has a connection with significant lag using ssh can become quite frustrating. [Mosh](https://mosh.org/), the mobile shell, improves upon ssh, allowing roaming connections, intermittent connectivity and providing intelligent local echo.
+Um problema comum em conexões a servidores remotos são desconexões em função do desligamento/modo de descanso do seu computador ou modificação da rede. Além disso, acesso ssh em uma conexão com latência significante pode ser bem frustrante. [Mosh](https://mosh.org/), o _shell_ móvel, trás melhoras sobre o ssh, ao permitir conexões em _roaming_, conectividade intermitente e disponibilizando eco local inteligente. 
 
-Sometimes it is convenient to mount a remote folder. [sshfs](https://github.com/libfuse/sshfs) can mount a folder on a remote server
+Às vezes é conveniente montar um diretório remoto. [sshfs](https://github.com/libfuse/sshfs) pode montar localmente diretórios em um servidor remoto, fazendo com que você possa utilizá-lo com um editor local.
 locally, and then you can use a local editor.
 
 
