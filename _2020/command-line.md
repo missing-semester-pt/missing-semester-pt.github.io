@@ -421,18 +421,18 @@ _Shells_ como o [fish](https://fishshell.com/) incluem várias dessas funcionali
 
 Algo a se notar quando se utiliza _frameworks_ como esse é que eles podem deixar o seu _shell_ mais lento, especialmente se o código que eles rodam não é otimizado propriamente ou se é muito código em si. Você pode analisar isso e desabilitar funcionalidades que você não utiliza muito ou que estejam deixando o seu _shell_ mais lento.
 
-# Terminal Emulators
+# Emuladores de terminais
 
-Along with customizing your shell, it is worth spending some time figuring out your choice of **terminal emulator** and its settings. There are many many terminal emulators out there (here is a [comparison](https://anarc.at/blog/2018-04-12-terminal-emulators-1/)).
+Além de customizar o seu _shell_, também pode ser útil avaliar o uso de diferentes **emuladores de terminais** e as suas diferentes configurações. Existem diferentes emuladores de terminais disponíveis para download e uso (aqui pode ser vista uma [comparação](https://anarc.at/blog/2018-04-12-terminal-emulators-1/), em inglês).
 
-Since you might be spending hundreds to thousands of hours in your terminal it pays off to look into its settings. Some of the aspects that you may want to modify in your terminal include:
+Já que você pode passar centenas ou até milhares de horas no seu terminal, pode ser que valha a pena explorar as suas configurações. Alguns aspectos que você pode querer modificar nele incluem:
 
-- Font choice
-- Color Scheme
-- Keyboard shortcuts
-- Tab/Pane support
-- Scrollback configuration
-- Performance (some newer terminals like [Alacritty](https://github.com/jwilm/alacritty) or [kitty](https://sw.kovidgoyal.net/kitty/) offer GPU acceleration).
+- Escolha da fonte
+- Esquema de cores
+- Atalhos de teclado
+- Uso de janelas/painéis
+- Configuração de rolagem para trás
+- Desempenho (terminais mais modernos como o [Alacritty](https://github.com/jwilm/alacritty) e [kitty](https://sw.kovidgoyal.net/kitty/) oferecem aceleração por GPU).
 
 # Exercises
 
