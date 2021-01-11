@@ -396,28 +396,30 @@ Um problema comum em conexões a servidores remotos são desconexões em funçã
 locally, and then you can use a local editor.
 
 
-# Shells & Frameworks
+# Shells e Frameworks
 
-During shell tool and scripting we covered the `bash` shell because it is by far the most ubiquitous shell and most systems have it as the default option. Nevertheless, it is not the only option.
+Ao falar sobre ferramentas de _shell_ e de scripts tratamos o _shell_ `bash` porque esse é de longe o _shell_ mais onipresente e a maioria dos sistemas o tem como a opção padrão. No entanto, essa não é a única opção.
 
-For example, the `zsh` shell is a superset of `bash` and provides many convenient features out of the box such as:
+Por exemplo, o `zsh` é uma extensão do `bash` e assim fornece por padrão várias funcionalidades úteis como:
 
-- Smarter globbing, `**`
-- Inline globbing/wildcard expansion
-- Spelling correction
-- Better tab completion/selection
-- Path expansion (`cd /u/lo/b` will expand as `/usr/local/bin`)
+- _Globbing_ mais inteligente, `**`
+- Expansão _inline_ de padrões com _globbing_ ou _wildcards_
+- Correção ortográfica
+- Melhor completamento/seleção com a tecla tab
+- Expansão de caminhos (`cd /u/lo/b` é expandido como `/usr/local/bin`)
 
-**Frameworks** can improve your shell as well. Some popular general frameworks are [prezto](https://github.com/sorin-ionescu/prezto) or [oh-my-zsh](https://ohmyz.sh/), and smaller ones that focus on specific features such as [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) or [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search). Shells like [fish](https://fishshell.com/) include many of these user-friendly features by default. Some of these features include:
 
-- Right prompt
-- Command syntax highlighting
-- History substring search
-- manpage based flag completions
-- Smarter autocompletion
-- Prompt themes
+**Frameworks** podem melhorar o seu _shell_ também. Alguns _frameworks_ gerais são o [prezto](https://github.com/sorin-ionescu/prezto) e o [oh-my-zsh](https://ohmyz.sh/), e alguns menores, focados em funcionalidades específicas como o [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) e o [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search).
+_Shells_ como o [fish](https://fishshell.com/) incluem várias dessas funcionalidades amigáveis por padrão. Algumas delas são:
 
-One thing to note when using these frameworks is that they may slow down your shell, especially if the code they run is not properly optimized or it is too much code. You can always profile it and disable the features that you do not use often or value over speed.
+- Prompts à direita
+- Destaque de sintaxe para comandos
+- Busca de _substrings_ no histórico
+- Completamento de _flags_ baseado nas manpages.
+- Completamento automático mais inteligente
+- Temas
+
+Algo a se notar quando se utiliza _frameworks_ como esse é que eles podem deixar o seu _shell_ mais lento, especialmente se o código que eles rodam não é otimizado propriamente ou se é muito código em si. Você pode analisar isso e desabilitar funcionalidades que você não utiliza muito ou que estejam deixando o seu _shell_ mais lento.
 
 # Terminal Emulators
 
