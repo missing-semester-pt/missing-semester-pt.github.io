@@ -343,7 +343,6 @@ Existem diversas maneiras para copiar arquivos por SSH:
 - `ssh+tee`, o mais simples é utilizar o comando `ssh` e a entrada STDIN ao executar `cat arquivolocal | ssh servidor_remoto tee arquivoremoto`. Lembre-se que o comando [`tee`](https://www.man7.org/linux/man-pages/man1/tee.1.html) escreve a saída de STDIN em um arquivo.
 - [`scp`](https://www.man7.org/linux/man-pages/man1/scp.1.html), ao copiar grandes conjuntos de arquivos/diretórios o comando de cópia segura `scp` é mais conveniente já que pode passar por diretórios recursivamente. A sintaxe é `scp caminho/para/arquivo_local servidor_remoto:camiho/para/arquivo_remoto`.
 - [`rsync`](https://www.man7.org/linux/man-pages/man1/rsync.1.html) melhora a funcionalidade de `scp` ao detectar arquivos idênticos tanto local quanto remotamente, e prevenindo que eles sejam copiados novamente. Ele também possui um controle mais direcionado sobre links simbólicos, permissões e tem funcionalidades extra como a _flag_ `--partial`, que pode resumir uma cópia interrompida previamente. `rsync` tem uma sintaxe parecida com `scp`.
-- [`rsync`](https://www.man7.org/linux/man-pages/man1/rsync.1.html) melhora a funcionalidade de `scp` para improves upon `scp` by detecting identical files in local and remote, and preventing copying them again. It also provides more fine grained control over symlinks, permissions and has extra features like the `--partial` flag that can resume from a previously interrupted copy. `rsync` has a similar syntax to `scp`.
 
 ## Redirecionamento de portas
 
@@ -434,58 +433,54 @@ Já que você pode passar centenas ou até milhares de horas no seu terminal, po
 - Configuração de rolagem para trás
 - Desempenho (terminais mais modernos como o [Alacritty](https://github.com/jwilm/alacritty) e [kitty](https://sw.kovidgoyal.net/kitty/) oferecem aceleração por GPU).
 
-# Exercises
+# Exercícios
 
-## Job control
+## Controle de processos
 
-1. From what we have seen, we can use some `ps aux | grep` commands to get our jobs' pids and then kill them, but there are better ways to do it. Start a `sleep 10000` job in a terminal, background it with `Ctrl-Z` and continue its execution with `bg`. Now use [`pgrep`](https://www.man7.org/linux/man-pages/man1/pgrep.1.html) to find its pid and [`pkill`](http://man7.org/linux/man-pages/man1/pgrep.1.html) to kill it without ever typing the pid itself. (Hint: use the `-af` flags).
+1. Pelo que já vimos, podemos utilizar comandos do tipo `ps aux | grep` para obter os pids de processos e então encerrá-los, mas existem melhores maneiras de se fazer isso. Comece rodando o comando `sleep 10000` em um terminal, ponha ele em segundo plano pressionando `Ctrl-Z` e continue a sua execução com `bg`. Agora utilize [`pgrep`](https://www.man7.org/linux/man-pages/man1/pgrep.1.html) para achar o seu pid e [`pkill`](http://man7.org/linux/man-pages/man1/pgrep.1.html) para encerrá-lo sem precisar digitar o seu pid. (Dica: utilize as _flags_ `-af`).
 
-1. Say you don't want to start a process until another completes, how you would go about it? In this exercise our limiting process will always be `sleep 60 &`.
-One way to achieve this is to use the [`wait`](https://www.man7.org/linux/man-pages/man1/wait.1p.html) command. Try launching the sleep command and having an `ls` wait until the background process finishes.
+1. Vamos supor que você não quer começar um processo até que outro termine. Como você faria isso? Nesse exercício o nosso processo limitador sempre será `sleep 60 &`.
+Um jeito de fazer isso é utilizar o comando [`wait`](https://www.man7.org/linux/man-pages/man1/wait.1p.html). Tente rodar o comando `sleep 60 &` e fazer com que um comando `ls` espere o processo em segundo plano finalizar.
+    No entanto, essa estratégia falhará se o iniciarmos em uma sessão de um _bash_ diferente, já que `wait` só considera processos filhos. Uma funcionalidade que não discutimos foi que o status de saída do comando `kill` é zero no caso de sucesso e um número diferente de zero caso contrário. `kill -0` não manda um sinal mas dará um status diferente de zero se o processo não existir.
+    Escreva uma função _bash_ chamada `pidwait` que recebe um pid e espera até que o processo dado complete. Você deverá utilizar o comando `sleep` para evitar o gasto desnecessário de ciclos de CPU.
 
-    However, this strategy will fail if we start in a different bash session, since `wait` only works for child processes. One feature we did not discuss in the notes is that the `kill` command's exit status will be zero on success and nonzero otherwise. `kill -0` does not send a signal but will give a nonzero exit status if the process does not exist.
-    Write a bash function called `pidwait` that takes a pid and waits until the given process completes. You should use `sleep` to avoid wasting CPU unnecessarily.
+## Multiplexador de terminal
 
-## Terminal multiplexer
+1. Siga este [tutorial](https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/) do `tmux` e aprenda como fazer algumas combinações básicas seguindo [esses passos] (https://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/).
 
-1. Follow this `tmux` [tutorial](https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/) and then learn how to do some basic customizations following [these steps](https://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/).
+## Apelidos
 
-## Aliases
+1. Crie um apelido chamado `dc` que executa o comando `cd` quando você digitá-lo incorretamente.
 
-1. Create an alias `dc` that resolves to `cd` for when you type it wrongly.
-
-1.  Run `history | awk '{$1="";print substr($0,2)}' | sort | uniq -c | sort -n | tail -n 10`  to get your top 10 most used commands and consider writing shorter aliases for them. Note: this works for Bash; if you're using ZSH, use `history 1` instead of just `history`.
+1. Execute `history | awk '{$1="";print substr($0,2)}' | sort | uniq -c | sort -n | tail -n 10` para listar os seus 10 comandos mais executados e considere escrever apelidos mais curtos para eles. Nota: isso apenas funciona para o Bash; se você estiver utilizando ZSH, utilize o comando `history 1` ao invés de apenas `history`.
 
 
 ## Dotfiles
 
-Let's get you up to speed with dotfiles.
-1. Create a folder for your dotfiles and set up version
-   control.
-1. Add a configuration for at least one program, e.g. your shell, with some
-   customization (to start off, it can be something as simple as customizing your shell prompt by setting `$PS1`).
-1. Set up a method to install your dotfiles quickly (and without manual effort) on a new machine. This can be as simple as a shell script that calls `ln -s` for each file, or you could use a [specialized
-   utility](https://dotfiles.github.io/utilities/).
-1. Test your installation script on a fresh virtual machine.
-1. Migrate all of your current tool configurations to your dotfiles repository.
-1. Publish your dotfiles on GitHub.
+Vamos praticar o uso de _dotfiles_.
+1. Crie uma pasta para os seus _dotfiles_ e configure seu sistema de controle de versionamento.
+1. Adicione uma configuração para pelo menos um programa, como por exemplo o seu _shell_, com algumas customizações (por exemplo, pode ser algo simples como customizar o _prompt do seu_ ao atribuir um valor para `$PS1`).
+1. Configure um método para instalar os seus _dotfiles_ rapidamente (e sem esforço manual) em uma nova máquina. Isso pode ser tão simples quando um script _shell_ que chama `ln -s` para cada arquivo, ou você pode utilizar um [utilitário especializado](https://dotfiles.github.io/utilities/).
+1. Teste o seu script de instalação em uma máquina virtual recém instalada.
+1. Migre todas as suas configurações atuais para o seu repositório de _dotfiles_.
+1. Publique os seus _dotfiles_ no GitHub.
 
-## Remote Machines
+## Máquinas Remotas
 
-Install a Linux virtual machine (or use an already existing one) for this exercise. If you are not familiar with virtual machines check out [this](https://hibbard.eu/install-ubuntu-virtual-box/) tutorial for installing one.
+Instale uma máquina virtual Linux (ou utilize uma existente) para este exercício. Se você não tem familiaridade com máquinas virtuais, veja [esse tutorial](https://hibbard.eu/install-ubuntu-virtual-box/) para aprender como instalar uma.
 
-1. Go to `~/.ssh/` and check if you have a pair of SSH keys there. If not, generate them with `ssh-keygen -o -a 100 -t ed25519`. It is recommended that you use a password and use `ssh-agent` , more info [here](https://www.ssh.com/ssh/agent).
-1. Edit `.ssh/config` to have an entry as follows
+1. Navegue até a pasta `~/.ssh/` e verifique se existe um par de chaves SSH nela. Se não, gere um com o comando `ssh-keygen -o -a 100 -t ed25519`. É recomendado que você utilize uma senha e utilize `ssh-agent`, (mais informação [aqui](https://www.ssh.com/ssh/agent)).
+1. Edite o arquivo `.ssh/config` para adicionar uma entrada como a seguinte:
 
 ```bash
 Host vm
-    User username_goes_here
-    HostName ip_goes_here
+    User usuario_vai_aqui
+    HostName ip_vai_aqui
     IdentityFile ~/.ssh/id_ed25519
     LocalForward 9999 localhost:8888
 ```
-1. Use `ssh-copy-id vm` to copy your ssh key to the server.
-1. Start a webserver in your VM by executing `python -m http.server 8888`. Access the VM webserver by navigating to `http://localhost:9999` in your machine.
-1. Edit your SSH server config by doing  `sudo vim /etc/ssh/sshd_config` and disable password authentication by editing the value of `PasswordAuthentication`. Disable root login by editing the value of `PermitRootLogin`. Restart the `ssh` service with `sudo service sshd restart`. Try sshing in again.
-1. (Challenge) Install [`mosh`](https://mosh.org/) in the VM and establish a connection. Then disconnect the network adapter of the server/VM. Can mosh properly recover from it?
-1. (Challenge) Look into what the `-N` and `-f` flags do in `ssh` and figure out what a command to achieve background port forwarding.
+1. Utilize `ssh-copy-id maquina-virtual` para copiar a chave SSH para o servidor.
+1. Inicie um servidor na sua máquina virtual executando `python -m http.server 8888`. Acesse esse servidor ao navegar ao endereço `http://localhost:9999` na sua máquina.
+1. Edite a configuração do seu servidor SSH executando `sudo vim /etc/ssh/sshd_config` e desabilite a autenticação por senha ao editar o valor de `PasswordAuthentication`. Desabilite login do usuário root ao editar o valor de `PermitRootLogin`. Reinicie o serviço `ssh` executando `sudo service sshd restart`. Tente entrar no servidor com SSH novamente.
+1. (Desafio) Instale o [`mosh`](https://mosh.org/) na máquina virtual e abra uma conexão com ele. Depois, desconecte o adaptador de rede do servidor/máquina virtual. O `mosh` consegue se recuperar dessa falha?
+1. (Desafio) Procure saber o que as _flags_ `-N` e `-f` fazem no comando `ssh` e descubra qual comando conseguiria realizar o redirecionamento de portas em segundo plano.
