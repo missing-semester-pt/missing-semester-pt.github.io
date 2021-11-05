@@ -89,7 +89,7 @@ Como se manter são quando estiver trabalhando com máquinas remotas
 usando chaves SSH e multiplexadores de terminal. Nunca mais manter
 vários terminais abertos apenas para rodar dois comandos ao mesmo
 tempo. Nunca mais digitar a sua senha toda vez que se conectar.
-Nunca mais perder tudo porque a sua internet disconectou ou você
+Nunca mais perder tudo porque a sua internet desconectou ou você
 teve que reiniciar o seu notebook.
 
 No exemplo abaixo, nós usamos `tmux` para manter as seções vivas em servidores remotos e `mosh` para fazer itinerância de redes e desconexão.
@@ -122,7 +122,7 @@ Nunca mais plotar em planilhas.
 
 Como usar máquinas virtuais para experimentar novos sistemas operacionais,
 isolar projetos não relacionados e manter sua máquina limpa e organizada.
-Nunca mais acidentalmente corroper o seu computador enquanto faz um experimento
+Nunca mais acidentalmente corromper o seu computador enquanto faz um experimento
 de segurança. Nunca mais milhões de pacotes aleatórios instalados com diferentes versões.
 
 ## Segurança
