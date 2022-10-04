@@ -215,177 +215,157 @@ Para fazer que um apelido seja persistente, você precisa incluí-lo em arquivos
 
 # Dotfiles
 
-Many programs are configured using plain-text files known as _dotfiles_
-(because the file names begin with a `.`, e.g. `~/.vimrc`, so that they are
-hidden in the directory listing `ls` by default).
+Muitos programas são configurados utilizando arquivos de texto simples conhecidos como _dotfiles_. 
+(porque os nomes desses arquivos começam com um `.`, como por exemplo `~/.vimrc`, ficando ocultos na listagem de diretórios do `ls` por padrão.)
 
-Shells are one example of programs configured with such files. On startup, your shell will read many files to load its configuration.
+_Shells_ são exemplos de programas configurados com esses arquivos. Na sua inicialização, o seu _shell_ irá ler vários arquivos para carregar a sua configuração.
+Dependendo do _shell_, seja iniciando um login e/ou uma sessão interativa o processo de inicialização pode ser razoavelmente complexo.
 Depending on the shell, whether you are starting a login and/or interactive the entire process can be quite complex.
-[Here](https://blog.flowblok.id.au/2013-02/shell-startup-scripts.html) is an excellent resource on the topic.
+[Aqui](https://blog.flowblok.id.au/2013-02/shell-startup-scripts.html) está uma excelente referência nesse tópico.
 
-For `bash`, editing your `.bashrc` or `.bash_profile` will work in most systems.
-Here you can include commands that you want to run on startup, like the alias we just described or modifications to your `PATH` environment variable.
-In fact, many programs will ask you to include a line like `export PATH="$PATH:/path/to/program/bin"` in your shell configuration file so their binaries can be found.
+No caso do `bash`, editar o seu `.bashrc` ou `.bash_profile` funcionará na maioria dos sistemas.
+Aqui você pode incluir comandos que você deseja que rodem na inicialização, como os apelidos descritos na seção anterior ou modificações à variável de ambiente `PATH`.
+Na verdade, vários programas pedirão que você inclua uma linha como `export PATH="$PATH:/caminho/para/programa/bin"` na configuração do seu _shell_ para que os seus arquivos binários possam ser encontrados.
 
 Some other examples of tools that can be configured through dotfiles are:
+Outros exemplos de ferramentas que podem ser configuradas por meio de _dotfiles_ são:
 
 - `bash` - `~/.bashrc`, `~/.bash_profile`
 - `git` - `~/.gitconfig`
-- `vim` - `~/.vimrc` and the `~/.vim` folder
+- `vim` - `~/.vimrc` e a pasta `~/.vim`
 - `ssh` - `~/.ssh/config`
 - `tmux` - `~/.tmux.conf`
 
-How should you organize your dotfiles? They should be in their own folder,
-under version control, and **symlinked** into place using a script. This has
-the benefits of:
+Como _dotfiles_ devem ser organizados? Eles devem estar na sua própria pasta, sob um sistema de controle de versionamento e com **links simbólicos** criados adequadamente utilizando um script. Isso tem os seguintes benefícios:
 
-- **Easy installation**: if you log in to a new machine, applying your
-customizations will only take a minute.
-- **Portability**: your tools will work the same way everywhere.
-- **Synchronization**: you can update your dotfiles anywhere and keep them all
-in sync.
-- **Change tracking**: you're probably going to be maintaining your dotfiles
-for your entire programming career, and version history is nice to have for
-long-lived projects.
+- **Instalação fácil**: se você fizer login em uma nova máquina, aplicar as suas customizações levará pouco tempo.
+- **Portabilidade**: as suas ferramentas funcionam da mesma maneira em qualquer lugar.
+- **Sincronização**: você pode atualizar os seus _dotfiles_ em qualquer lugar e mantê-los sincronizados.
+- **Rastreamento de mudanças**: provavelmente você vai manter os seus _dotfiles_ por toda a sua carreira, e é bom ter histórico de versões por projetos de longo prazo.
 
-What should you put in your dotfiles?
-You can learn about your tool's settings by reading online documentation or
-[man pages](https://en.wikipedia.org/wiki/Man_page). Another great way is to
-search the internet for blog posts about specific programs, where authors will
-tell you about their preferred customizations. Yet another way to learn about
-customizations is to look through other people's dotfiles: you can find tons of
-[dotfiles
-repositories](https://github.com/search?o=desc&q=dotfiles&s=stars&type=Repositories)
-on Github --- see the most popular one
-[here](https://github.com/mathiasbynens/dotfiles) (we advise you not to blindly
-copy configurations though).
-[Here](https://dotfiles.github.io/) is another good resource on the topic.
+O que deve ser colocado nos seus _dotfiles_?
+Você pode aprender mais sobre as configurações de uma ferramenta específica ao ler a sua documentação online ou as [páginas do man](https://en.wikipedia.org/wiki/Man_page). Outra ótima alternativa é pesquisar na internet por posts em blogs sobre programas específicos, em que autores expõe as suas customizações preferidas. Outra maneira para aprender sobre essas customizações é olhar os _dotfiles_ de outras pessoas: você pode encontrar diversos [repositórios de _dotfiles_](https://github.com/search?o=desc&q=dotfiles&s=stars&type=Repositories) no GitHub --- veja o mais popular [aqui](https://github.com/mathiasbynens/dotfiles) (no entanto, recomenda-se que você não copie configurações cegamente. Tente adaptar às suas preferências).
+[Aqui](https://dotfiles.github.io/) você pode encontrar outra boa referência nesse tópico.
 
-All of the class instructors have their dotfiles publicly accessible on GitHub: [Anish](https://github.com/anishathalye/dotfiles),
+Todos os instrutores das aulas tem os seus _dotfiles_ disponibilizados no GitHub: [Anish](https://github.com/anishathalye/dotfiles),
 [Jon](https://github.com/jonhoo/configs),
 [Jose](https://github.com/jjgo/dotfiles).
 
+## Portabilidade
 
-## Portability
+Um problema comum com _dotfiles_ é que as suas configurações podemo não funcionar quando se trabalha em diferentes máquinas, como por exemplo se essas máquinas tiverem diferentes sistemas operacionais ou _shells_. Às vezes você também pode querer que determinada configuração seja aplicada somente a uma determinada máquina.
 
-A common pain with dotfiles is that the configurations might not work when working with several machines, e.g. if they have different operating systems or shells. Sometimes you also want some configuration to be applied only in a given machine.
-
-There are some tricks for making this easier.
-If the configuration file supports it, use the equivalent of if-statements to
-apply machine specific customizations. For example, your shell could have something
-like:
+Existem alguns truques para que isso seja mais fácil de se realizar.
+Se o arquivo de configuração dá suporte a isso, use o equivalentea expressões if-else para aplicar customizações para máquinas especificas. Por exemplo, o seu _shell_ pode ter algo como o seguinte: 
 
 ```bash
-if [[ "$(uname)" == "Linux" ]]; then {do_something}; fi
+if [[ "$(uname)" == "Linux" ]]; then {faca_algo}; fi
 
 # Check before using shell-specific features
-if [[ "$SHELL" == "zsh" ]]; then {do_something}; fi
+if [[ "$SHELL" == "zsh" ]]; then {faca_algo}; fi
 
 # You can also make it machine-specific
-if [[ "$(hostname)" == "myServer" ]]; then {do_something}; fi
+if [[ "$(hostname)" == "meuServidor" ]]; then {faca_algo}; fi
 ```
 
-If the configuration file supports it, make use of includes. For example,
-a `~/.gitconfig` can have a setting:
+Se o arquivo de configuração der suporte, você pode utilizar _includes_. Por exemplo, um arquivo `~/.gitconfig` pode ter a seguinte configuração:
 
 ```
 [include]
     path = ~/.gitconfig_local
 ```
 
-And then on each machine, `~/.gitconfig_local` can contain machine-specific
-settings. You could even track these in a separate repository for
-machine-specific settings.
+Então em cada máquina, o arquivo `~/.gitconfig_local` pode conter configurações especificas de cada máquina. Você pode até gerenciar esses arquivos em um repositório separado para configurações específicas.
 
-This idea is also useful if you want different programs to share some configurations. For instance, if you want both `bash` and `zsh` to share the same set of aliases you can write them under `.aliases` and have the following block in both:
+Essa ideia também é útil caso você queira que diferentes programas compartilhem algumas configurações. Por exemplo, se você quiser que ambos os _shells_ `zsh` e `bash` compartilhem o mesmo conjunto de apelidos você pode escrevê-los em um arquivo `.aliases` e ter o seguinte bloco em ambos:
 
 ```bash
-# Test if ~/.aliases exists and source it
+# Testa se ~/.aliases existe e o carrega
 if [ -f ~/.aliases ]; then
     source ~/.aliases
 fi
 ```
 
-# Remote Machines
+# Máquinas Remotas
 
-It has become more and more common for programmers to use remote servers in their everyday work. If you need to use remote servers in order to deploy backend software or you need a server with higher computational capabilities, you will end up using a Secure Shell (SSH). As with most tools covered, SSH is highly configurable so it is worth learning about it.
+É cada vez mais comum para programadores utilizar servidores remoto no dia-a-dia. Se você precisa utilzar servidores remotos para realizar a implantação de um _software backend_ ou se você de um servidor com um maior poder computacional, você provavelmente utilizará _Secure Shell_ (SSH). Assim como a maioria das ferramentas aqui demonstradas, SSH é altamente configurável, então vale a pena aprender mais sobre isso.
 
-To `ssh` into a server you execute a command as follows
+Para entrar com `ssh` em um servidor você precisa executar o seguinte comando
 
 ```bash
 ssh foo@bar.mit.edu
 ```
 
-Here we are trying to ssh as user `foo` in server `bar.mit.edu`.
-The server can be specified with a URL (like `bar.mit.edu`) or an IP (something like `foobar@192.168.1.42`). Later we will see that if we modify ssh config file you can access just using something like `ssh bar`.
+Aqui estamos tentando entrar com SSH utilizando o usuário `foo` no servidor `bar.mit.edu`.
+O servidor pode ser especificado com uma URL (como `bar.mit.edu`) ou um IP (algo como `foobar@192.168.1.42`). Depois veremos como modificar o arquivo de configuração do SSH para acessar um servidor apenas digitando algo como `ssh bar`.
 
-## Executing commands
+## Executando comandos
 
-An often overlooked feature of `ssh` is the ability to run commands directly.
-`ssh foobar@server ls` will execute `ls` in the home folder of foobar.
-It works with pipes, so `ssh foobar@server ls | grep PATTERN` will grep locally the remote output of `ls` and `ls | ssh foobar@server grep PATTERN` will grep remotely the local output of `ls`.
+Uma funcionalidade do `ssh` frequentemente deixada de lado é a possibilidade de se executar comandos diretamente.
+`ssh foobar@server ls` executar `ls` na pasta raíz de foobar.
+Isso funciona com _pipes_, então `ssh foobar@server ls | grep PATTERN` irá executar o comando `grep` localmente sobre a saída remota de `ls` e `ls | ssh foobar@server grep PATTERN` rodará `grep` remotamente para a saída local de `ls`.
 
+## Chaves SSH
 
-## SSH Keys
+Autenticação baseada em chaves utiliza criptografia de chaves privadas para provar ao servidor que o cliente possui a chave privada secreta sem revelar a chave.
+Dessa maneira, você não precisa reintroduzir a sua senha sempre. De qualquer jeito, a chave privada (frequentemente `~/.ssh/id_rsa` e mais recentemente `~/.ssh/id_ed25519`) é efetivamente a sua senha, então trate-a como tal.
 
-Key-based authentication exploits public-key cryptography to prove to the server that the client owns the secret private key without revealing the key. This way you do not need to reenter your password every time. Nevertheless, the private key (often `~/.ssh/id_rsa` and more recently `~/.ssh/id_ed25519`) is effectively your password, so treat it like so.
+### Geração de chaves
 
-### Key generation
-
-To generate a pair you can run [`ssh-keygen`](https://www.man7.org/linux/man-pages/man1/ssh-keygen.1.html).
+Para gerar um pair de chaves você pode executar [`ssh-keygen`](https://www.man7.org/linux/man-pages/man1/ssh-keygen.1.html).
 ```bash
 ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_ed25519
 ```
-You should choose a passphrase, to avoid someone who gets hold of your private key to access authorized servers. Use [`ssh-agent`](https://www.man7.org/linux/man-pages/man1/ssh-agent.1.html) or [`gpg-agent`](https://linux.die.net/man/1/gpg-agent) so you do not have to type your passphrase every time.
 
-If you have ever configured pushing to GitHub using SSH keys, then you have probably done the steps outlined [here](https://help.github.com/articles/connecting-to-github-with-ssh/) and have a valid key pair already. To check if you have a passphrase and validate it you can run `ssh-keygen -y -f /path/to/key`.
+Você precisa escolher uma senha, para evitar que alguém que obtenha a sua chave privada consiga acessar servidores autorizados. Utilize [`ssh-agent`](https://www.man7.org/linux/man-pages/man1/ssh-agent.1.html) ou [`gpg-agent`](https://linux.die.net/man/1/gpg-agent) para que você não precise digitar a sua senha sempre.
 
-### Key based authentication
+Se alguma vez você configurou a atualização de repositórios do GitHub utilizando chaves SSH, então você provavelmente seguiu os passos listados aqui [aqui](https://help.github.com/articles/connecting-to-github-with-ssh/) e já tem um par de chaves. Para checar se voc6e tem uma senha e validá-la você pode executar `ssh-keygen -y -f /caminho/para/chave`.
 
+### Autenticação baseada em chaves
+
+`ssh` checará `.ssh/authorized_keys` para determinar a que clientes deverá permitir o acesso. Para copiar para esse caminho uma chave pública você pode utilizar:
 `ssh` will look into `.ssh/authorized_keys` to determine which clients it should let in. To copy a public key over you can use:
 
 ```bash
 cat .ssh/id_ed25519.pub | ssh foobar@remote 'cat >> ~/.ssh/authorized_keys'
 ```
 
-A simpler solution can be achieved with `ssh-copy-id` where available:
+Uma solução mais simples pode ser alcançada com `ssh-copy-id`, quando disponível:
 
 ```bash
 ssh-copy-id -i .ssh/id_ed25519.pub foobar@remote
 ```
 
-## Copying files over SSH
+## Copiando arquivos por SSH
 
-There are many ways to copy files over ssh:
+Existem diversas maneiras para copiar arquivos por SSH:
 
-- `ssh+tee`, the simplest is to use `ssh` command execution and STDIN input by doing `cat localfile | ssh remote_server tee serverfile`. Recall that [`tee`](https://www.man7.org/linux/man-pages/man1/tee.1.html) writes the output from STDIN into a file.
-- [`scp`](https://www.man7.org/linux/man-pages/man1/scp.1.html) when copying large amounts of files/directories, the secure copy `scp` command is more convenient since it can easily recurse over paths. The syntax is `scp path/to/local_file remote_host:path/to/remote_file`
-- [`rsync`](https://www.man7.org/linux/man-pages/man1/rsync.1.html) improves upon `scp` by detecting identical files in local and remote, and preventing copying them again. It also provides more fine grained control over symlinks, permissions and has extra features like the `--partial` flag that can resume from a previously interrupted copy. `rsync` has a similar syntax to `scp`.
+- `ssh+tee`, o mais simples é utilizar o comando `ssh` e a entrada STDIN ao executar `cat arquivolocal | ssh servidor_remoto tee arquivoremoto`. Lembre-se que o comando [`tee`](https://www.man7.org/linux/man-pages/man1/tee.1.html) escreve a saída de STDIN em um arquivo.
+- [`scp`](https://www.man7.org/linux/man-pages/man1/scp.1.html), ao copiar grandes conjuntos de arquivos/diretórios o comando de cópia segura `scp` é mais conveniente já que pode passar por diretórios recursivamente. A sintaxe é `scp caminho/para/arquivo_local servidor_remoto:camiho/para/arquivo_remoto`.
+- [`rsync`](https://www.man7.org/linux/man-pages/man1/rsync.1.html) melhora a funcionalidade de `scp` ao detectar arquivos idênticos tanto local quanto remotamente, e prevenindo que eles sejam copiados novamente. Ele também possui um controle mais direcionado sobre links simbólicos, permissões e tem funcionalidades extra como a _flag_ `--partial`, que pode resumir uma cópia interrompida previamente. `rsync` tem uma sintaxe parecida com `scp`.
 
-## Port Forwarding
+## Redirecionamento de portas
 
-In many scenarios you will run into software that listens to specific ports in the machine. When this happens in your local machine you can type `localhost:PORT` or `127.0.0.1:PORT`, but what do you do with a remote server that does not have its ports directly available through the network/internet?.
+Em muitos cenários estarão presentes _softwares_ que funcionam em uma determinada porta da máquina. Quando isso acontece na sua máquina local você pode digitar `localhost:PORTA` ou `127.0.0.1:PORTA`, mas o que você faz quando um servidor remoto não tem suas portas diretamente disponíveis pela rede/internet?
 
-This is called _port forwarding_ and it
-comes in two flavors: Local Port Forwarding and Remote Port Forwarding (see the pictures for more details, credit of the pictures from [this StackOverflow post](https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot)).
+Isso é chamado de _redirecionamento de portas_ e isso pode ser realizado de duas maneiras: Redirecionamento Local de Portas e Redirecionamento Remoto de Portas (veja as figuras em mais detalhes, créditos para as figuras [desse post do StackOverflow](https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot)).
 
-**Local Port Forwarding**
-![Local Port Forwarding](https://i.stack.imgur.com/a28N8.png  "Local Port Forwarding")
+**Redirecionamento Local de Portas**
+![Redirecionamento Local de Portas](https://i.stack.imgur.com/a28N8.png  "Redirecionamento Local de Portas") 
+**Redirecionamento Remoto de Portas**
+![Redirecionamento Remoto de Portas](https://i.stack.imgur.com/4iK3b.png  "Redirecionamento Remoto de Portas")
 
-**Remote Port Forwarding**
-![Remote Port Forwarding](https://i.stack.imgur.com/4iK3b.png  "Remote Port Forwarding")
-
-The most common scenario is local port forwarding, where a service in the remote machine listens in a port and you want to link a port in your local machine to forward to the remote port. For example, if we execute  `jupyter notebook` in the remote server that listens to the port `8888`. Thus, to forward that to the local port `9999`, we would do `ssh -L 9999:localhost:8888 foobar@remote_server` and then navigate to `locahost:9999` in our local machine.
+O cenário mais comum é o redirecionamento local de portas, em que um serviço na máquina remota executa em uma porta e você quer vincular uma porta na sua máquina local para redirecionar para a porta remota. Por exemplo, considere o caso em que executamos `jupyter notebook` no servidor remoto na porta `8888`. Então, para redirecionar para a porta local `9999`, poderíamos executar `ssh -L 9999:localhost:8888 foobar@servidor_remoto` e então navegar para `localhost:9999` na nossa máquina local.
 
 
-## SSH Configuration
+## Configuração SSH
 
-We have covered many many arguments that we can pass. A tempting alternative is to create shell aliases that look like
+Aqui cobrimos muitos argumentos que pode sem passados para o `ssh`. Uma alternatvia tentadora é criar apelidos do _shell_, algo parecido com:
 ```bash
-alias my_server="ssh -i ~/.id_ed25519 --port 2222 -L 9999:localhost:8888 foobar@remote_server
+alias meu_servidor="ssh -i ~/.id_ed25519 --port 2222 -L 9999:localhost:8888 foobar@servidor_remoto
 ```
 
-However, there is a better alternative using `~/.ssh/config`.
+No entanto, existe uma alternativa melhor utilizando `~/.ssh/config`.
 
 ```bash
 Host vm
@@ -395,114 +375,112 @@ Host vm
     IdentityFile ~/.ssh/id_ed25519
     LocalForward 9999 localhost:8888
 
-# Configs can also take wildcards
+# Configurações podem também possuir "wildcards"
 Host *.mit.edu
     User foobaz
 ```
 
-An additional advantage of using the `~/.ssh/config` file over aliases  is that other programs like `scp`, `rsync`, `mosh`, &c are able to read it as well and convert the settings into the corresponding flags.
+Uma vantagem adicional de utilizar o arquivo `~/.ssh/config` ao invés de apelidos é que outros programas como `scp`, `rsync`, `mosh`, etc podem lê-lo assim como converter as configurações nas _flags_ correspondentes.
 
 
-Note that the `~/.ssh/config` file can be considered a dotfile, and in general it is fine for it to be included with the rest of your dotfiles. However, if you make it public, think about the information that you are potentially providing strangers on the internet: addresses of your servers, users, open ports, &c. This may facilitate some types of attacks so be thoughtful about sharing your SSH configuration.
+Note que o arquivo `~/.ssh/config` pode ser considerado um _dotfile_, e em geral não há problema de incluí-lo junto com o restante dos seus _dotfiles_. No entanto, se você deixá-lo disponível publicamente, pense sobre a informação que você está potencialmente disponibilizando a estranhos na internet: endereços dos seus servidores, usuários, portas abertas, etc. Isso pode facilitar tipos de ataques, então pense bem antes de compartilhar a sua configuração do SSH.
 
-Server side configuration is usually specified in `/etc/ssh/sshd_config`. Here you can make changes like disabling password authentication, changing ssh ports, enabling X11 forwarding, &c. You can specify config settings on a per user basis.
+Configuracões do lado do servidor são geralmente especificadas em `/etc/ssh/sshd_config`. Aqui você pode fazer mudanças como desativar autenticação por senha, modificar portas ssh, ativar redirecionamento X11, etc. Você também pode especificar configurações para cada usuário.
 
-## Miscellaneous
+## Diversos
 
-A common pain when connecting to a remote server are disconnections due to shutting down/sleeping your computer or changing a network. Moreover if one has a connection with significant lag using ssh can become quite frustrating. [Mosh](https://mosh.org/), the mobile shell, improves upon ssh, allowing roaming connections, intermittent connectivity and providing intelligent local echo.
+Um problema comum em conexões a servidores remotos são desconexões em função do desligamento/modo de descanso do seu computador ou modificação da rede. Além disso, acesso ssh em uma conexão com latência significante pode ser bem frustrante. [Mosh](https://mosh.org/), o _shell_ móvel, trás melhoras sobre o ssh, ao permitir conexões em _roaming_, conectividade intermitente e disponibilizando eco local inteligente. 
 
-Sometimes it is convenient to mount a remote folder. [sshfs](https://github.com/libfuse/sshfs) can mount a folder on a remote server
+Às vezes é conveniente montar um diretório remoto. [sshfs](https://github.com/libfuse/sshfs) pode montar localmente diretórios em um servidor remoto, fazendo com que você possa utilizá-lo com um editor local.
 locally, and then you can use a local editor.
 
 
-# Shells & Frameworks
+# Shells e Frameworks
 
-During shell tool and scripting we covered the `bash` shell because it is by far the most ubiquitous shell and most systems have it as the default option. Nevertheless, it is not the only option.
+Ao falar sobre ferramentas de _shell_ e de scripts tratamos o _shell_ `bash` porque esse é de longe o _shell_ mais onipresente e a maioria dos sistemas o tem como a opção padrão. No entanto, essa não é a única opção.
 
-For example, the `zsh` shell is a superset of `bash` and provides many convenient features out of the box such as:
+Por exemplo, o `zsh` é uma extensão do `bash` e assim fornece por padrão várias funcionalidades úteis como:
 
-- Smarter globbing, `**`
-- Inline globbing/wildcard expansion
-- Spelling correction
-- Better tab completion/selection
-- Path expansion (`cd /u/lo/b` will expand as `/usr/local/bin`)
+- _Globbing_ mais inteligente, `**`
+- Expansão _inline_ de padrões com _globbing_ ou _wildcards_
+- Correção ortográfica
+- Melhor completamento/seleção com a tecla tab
+- Expansão de caminhos (`cd /u/lo/b` é expandido como `/usr/local/bin`)
 
-**Frameworks** can improve your shell as well. Some popular general frameworks are [prezto](https://github.com/sorin-ionescu/prezto) or [oh-my-zsh](https://ohmyz.sh/), and smaller ones that focus on specific features such as [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) or [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search). Shells like [fish](https://fishshell.com/) include many of these user-friendly features by default. Some of these features include:
 
-- Right prompt
-- Command syntax highlighting
-- History substring search
-- manpage based flag completions
-- Smarter autocompletion
-- Prompt themes
+**Frameworks** podem melhorar o seu _shell_ também. Alguns _frameworks_ gerais são o [prezto](https://github.com/sorin-ionescu/prezto) e o [oh-my-zsh](https://ohmyz.sh/), e alguns menores, focados em funcionalidades específicas como o [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) e o [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search).
+_Shells_ como o [fish](https://fishshell.com/) incluem várias dessas funcionalidades amigáveis por padrão. Algumas delas são:
 
-One thing to note when using these frameworks is that they may slow down your shell, especially if the code they run is not properly optimized or it is too much code. You can always profile it and disable the features that you do not use often or value over speed.
+- Prompts à direita
+- Destaque de sintaxe para comandos
+- Busca de _substrings_ no histórico
+- Completamento de _flags_ baseado nas manpages.
+- Completamento automático mais inteligente
+- Temas
 
-# Terminal Emulators
+Algo a se notar quando se utiliza _frameworks_ como esse é que eles podem deixar o seu _shell_ mais lento, especialmente se o código que eles rodam não é otimizado propriamente ou se é muito código em si. Você pode analisar isso e desabilitar funcionalidades que você não utiliza muito ou que estejam deixando o seu _shell_ mais lento.
 
-Along with customizing your shell, it is worth spending some time figuring out your choice of **terminal emulator** and its settings. There are many many terminal emulators out there (here is a [comparison](https://anarc.at/blog/2018-04-12-terminal-emulators-1/)).
+# Emuladores de terminais
 
-Since you might be spending hundreds to thousands of hours in your terminal it pays off to look into its settings. Some of the aspects that you may want to modify in your terminal include:
+Além de customizar o seu _shell_, também pode ser útil avaliar o uso de diferentes **emuladores de terminais** e as suas diferentes configurações. Existem diferentes emuladores de terminais disponíveis para download e uso (aqui pode ser vista uma [comparação](https://anarc.at/blog/2018-04-12-terminal-emulators-1/), em inglês).
 
-- Font choice
-- Color Scheme
-- Keyboard shortcuts
-- Tab/Pane support
-- Scrollback configuration
-- Performance (some newer terminals like [Alacritty](https://github.com/jwilm/alacritty) or [kitty](https://sw.kovidgoyal.net/kitty/) offer GPU acceleration).
+Já que você pode passar centenas ou até milhares de horas no seu terminal, pode ser que valha a pena explorar as suas configurações. Alguns aspectos que você pode querer modificar nele incluem:
 
-# Exercises
+- Escolha da fonte
+- Esquema de cores
+- Atalhos de teclado
+- Uso de janelas/painéis
+- Configuração de rolagem para trás
+- Desempenho (terminais mais modernos como o [Alacritty](https://github.com/jwilm/alacritty) e [kitty](https://sw.kovidgoyal.net/kitty/) oferecem aceleração por GPU).
 
-## Job control
+# Exercícios
 
-1. From what we have seen, we can use some `ps aux | grep` commands to get our jobs' pids and then kill them, but there are better ways to do it. Start a `sleep 10000` job in a terminal, background it with `Ctrl-Z` and continue its execution with `bg`. Now use [`pgrep`](https://www.man7.org/linux/man-pages/man1/pgrep.1.html) to find its pid and [`pkill`](http://man7.org/linux/man-pages/man1/pgrep.1.html) to kill it without ever typing the pid itself. (Hint: use the `-af` flags).
+## Controle de processos
 
-1. Say you don't want to start a process until another completes, how you would go about it? In this exercise our limiting process will always be `sleep 60 &`.
-One way to achieve this is to use the [`wait`](https://www.man7.org/linux/man-pages/man1/wait.1p.html) command. Try launching the sleep command and having an `ls` wait until the background process finishes.
+1. Pelo que já vimos, podemos utilizar comandos do tipo `ps aux | grep` para obter os pids de processos e então encerrá-los, mas existem melhores maneiras de se fazer isso. Comece rodando o comando `sleep 10000` em um terminal, ponha ele em segundo plano pressionando `Ctrl-Z` e continue a sua execução com `bg`. Agora utilize [`pgrep`](https://www.man7.org/linux/man-pages/man1/pgrep.1.html) para achar o seu pid e [`pkill`](http://man7.org/linux/man-pages/man1/pgrep.1.html) para encerrá-lo sem precisar digitar o seu pid. (Dica: utilize as _flags_ `-af`).
 
-    However, this strategy will fail if we start in a different bash session, since `wait` only works for child processes. One feature we did not discuss in the notes is that the `kill` command's exit status will be zero on success and nonzero otherwise. `kill -0` does not send a signal but will give a nonzero exit status if the process does not exist.
-    Write a bash function called `pidwait` that takes a pid and waits until the given process completes. You should use `sleep` to avoid wasting CPU unnecessarily.
+1. Vamos supor que você não quer começar um processo até que outro termine. Como você faria isso? Nesse exercício o nosso processo limitador sempre será `sleep 60 &`.
+Um jeito de fazer isso é utilizar o comando [`wait`](https://www.man7.org/linux/man-pages/man1/wait.1p.html). Tente rodar o comando `sleep 60 &` e fazer com que um comando `ls` espere o processo em segundo plano finalizar.
+    No entanto, essa estratégia falhará se o iniciarmos em uma sessão de um _bash_ diferente, já que `wait` só considera processos filhos. Uma funcionalidade que não discutimos foi que o status de saída do comando `kill` é zero no caso de sucesso e um número diferente de zero caso contrário. `kill -0` não manda um sinal mas dará um status diferente de zero se o processo não existir.
+    Escreva uma função _bash_ chamada `pidwait` que recebe um pid e espera até que o processo dado complete. Você deverá utilizar o comando `sleep` para evitar o gasto desnecessário de ciclos de CPU.
 
-## Terminal multiplexer
+## Multiplexador de terminal
 
-1. Follow this `tmux` [tutorial](https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/) and then learn how to do some basic customizations following [these steps](https://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/).
+1. Siga este [tutorial](https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/) do `tmux` e aprenda como fazer algumas combinações básicas seguindo [esses passos] (https://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/).
 
-## Aliases
+## Apelidos
 
-1. Create an alias `dc` that resolves to `cd` for when you type it wrongly.
+1. Crie um apelido chamado `dc` que executa o comando `cd` quando você digitá-lo incorretamente.
 
-1.  Run `history | awk '{$1="";print substr($0,2)}' | sort | uniq -c | sort -n | tail -n 10`  to get your top 10 most used commands and consider writing shorter aliases for them. Note: this works for Bash; if you're using ZSH, use `history 1` instead of just `history`.
+1. Execute `history | awk '{$1="";print substr($0,2)}' | sort | uniq -c | sort -n | tail -n 10` para listar os seus 10 comandos mais executados e considere escrever apelidos mais curtos para eles. Nota: isso apenas funciona para o Bash; se você estiver utilizando ZSH, utilize o comando `history 1` ao invés de apenas `history`.
 
 
 ## Dotfiles
 
-Let's get you up to speed with dotfiles.
-1. Create a folder for your dotfiles and set up version
-   control.
-1. Add a configuration for at least one program, e.g. your shell, with some
-   customization (to start off, it can be something as simple as customizing your shell prompt by setting `$PS1`).
-1. Set up a method to install your dotfiles quickly (and without manual effort) on a new machine. This can be as simple as a shell script that calls `ln -s` for each file, or you could use a [specialized
-   utility](https://dotfiles.github.io/utilities/).
-1. Test your installation script on a fresh virtual machine.
-1. Migrate all of your current tool configurations to your dotfiles repository.
-1. Publish your dotfiles on GitHub.
+Vamos praticar o uso de _dotfiles_.
+1. Crie uma pasta para os seus _dotfiles_ e configure seu sistema de controle de versionamento.
+1. Adicione uma configuração para pelo menos um programa, como por exemplo o seu _shell_, com algumas customizações (por exemplo, pode ser algo simples como customizar o _prompt do seu_ ao atribuir um valor para `$PS1`).
+1. Configure um método para instalar os seus _dotfiles_ rapidamente (e sem esforço manual) em uma nova máquina. Isso pode ser tão simples quando um script _shell_ que chama `ln -s` para cada arquivo, ou você pode utilizar um [utilitário especializado](https://dotfiles.github.io/utilities/).
+1. Teste o seu script de instalação em uma máquina virtual recém instalada.
+1. Migre todas as suas configurações atuais para o seu repositório de _dotfiles_.
+1. Publique os seus _dotfiles_ no GitHub.
 
-## Remote Machines
+## Máquinas Remotas
 
-Install a Linux virtual machine (or use an already existing one) for this exercise. If you are not familiar with virtual machines check out [this](https://hibbard.eu/install-ubuntu-virtual-box/) tutorial for installing one.
+Instale uma máquina virtual Linux (ou utilize uma existente) para este exercício. Se você não tem familiaridade com máquinas virtuais, veja [esse tutorial](https://hibbard.eu/install-ubuntu-virtual-box/) para aprender como instalar uma.
 
-1. Go to `~/.ssh/` and check if you have a pair of SSH keys there. If not, generate them with `ssh-keygen -o -a 100 -t ed25519`. It is recommended that you use a password and use `ssh-agent` , more info [here](https://www.ssh.com/ssh/agent).
-1. Edit `.ssh/config` to have an entry as follows
+1. Navegue até a pasta `~/.ssh/` e verifique se existe um par de chaves SSH nela. Se não, gere um com o comando `ssh-keygen -o -a 100 -t ed25519`. É recomendado que você utilize uma senha e utilize `ssh-agent`, (mais informação [aqui](https://www.ssh.com/ssh/agent)).
+1. Edite o arquivo `.ssh/config` para adicionar uma entrada como a seguinte:
 
 ```bash
 Host vm
-    User username_goes_here
-    HostName ip_goes_here
+    User usuario_vai_aqui
+    HostName ip_vai_aqui
     IdentityFile ~/.ssh/id_ed25519
     LocalForward 9999 localhost:8888
 ```
-1. Use `ssh-copy-id vm` to copy your ssh key to the server.
-1. Start a webserver in your VM by executing `python -m http.server 8888`. Access the VM webserver by navigating to `http://localhost:9999` in your machine.
-1. Edit your SSH server config by doing  `sudo vim /etc/ssh/sshd_config` and disable password authentication by editing the value of `PasswordAuthentication`. Disable root login by editing the value of `PermitRootLogin`. Restart the `ssh` service with `sudo service sshd restart`. Try sshing in again.
-1. (Challenge) Install [`mosh`](https://mosh.org/) in the VM and establish a connection. Then disconnect the network adapter of the server/VM. Can mosh properly recover from it?
-1. (Challenge) Look into what the `-N` and `-f` flags do in `ssh` and figure out what a command to achieve background port forwarding.
+1. Utilize `ssh-copy-id maquina-virtual` para copiar a chave SSH para o servidor.
+1. Inicie um servidor na sua máquina virtual executando `python -m http.server 8888`. Acesse esse servidor ao navegar ao endereço `http://localhost:9999` na sua máquina.
+1. Edite a configuração do seu servidor SSH executando `sudo vim /etc/ssh/sshd_config` e desabilite a autenticação por senha ao editar o valor de `PasswordAuthentication`. Desabilite login do usuário root ao editar o valor de `PermitRootLogin`. Reinicie o serviço `ssh` executando `sudo service sshd restart`. Tente entrar no servidor com SSH novamente.
+1. (Desafio) Instale o [`mosh`](https://mosh.org/) na máquina virtual e abra uma conexão com ele. Depois, desconecte o adaptador de rede do servidor/máquina virtual. O `mosh` consegue se recuperar dessa falha?
+1. (Desafio) Procure saber o que as _flags_ `-N` e `-f` fazem no comando `ssh` e descubra qual comando conseguiria realizar o redirecionamento de portas em segundo plano.
