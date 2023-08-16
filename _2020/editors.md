@@ -1,231 +1,242 @@
 ---
 layout: lecture
 title: "Editores de Texto (Vim)"
-date: 2019-01-15
+date: 2023-08-16
 ready: true
 video:
   aspect: 56.25
   id: a6Q8Na575qc
 ---
 
-Writing English words and writing code are very different activities. When
-programming, you spend more time switching files, reading, navigating, and
-editing code compared to writing a long stream. It makes sense that there are
-different types of programs for writing English words versus code (e.g.
-Microsoft Word versus Visual Studio Code).
+Escrever palavras em português e escrever código são atividades bem diferentes.
+Quando estamos programando, você passa a maior parte do tempo pulando de arquivo
+em arquivo, lendo, navegando e editando código ao invés de escrever um long e
+contínuo texto. Faz sentido que existem diferentes programas para escrever
+palavras e escrever código (Ex: Microsoft Word vs Visual Studio Code).
 
-As programmers, we spend most of our time editing code, so it's worth investing
-time mastering an editor that fits your needs. Here's how you learn a new
-editor:
+Como programadores, nós passamos a maior parte do nosso tempo editando código,
+então vale a pena investir tempo em nós tornar mestre em um editor de texto que
+se encaixe nas suas necessidades. Aqui você vai aprender um novo editor:
 
-- Start with a tutorial (i.e. this lecture, plus resources that we point out)
-- Stick with using the editor for all your text editing needs (even if it slows
-you down initially)
-- Look things up as you go: if it seems like there should be a better way to do
-something, there probably is
+- Comece com um tutorial (Ex: essa aula mais o material que nós indicaremos)
+- Continue usando o editor para todas as suas edições de texto (mesmo que
+diminua sua produtividade inicialmente)
+- Aprenda coisas enquanto você vai utilzando: se por acaso, parece que tem uma
+maneira melhor de fazer alguma coisa, provavelmente tem.
 
-If you follow the above method, fully committing to using the new program for
-all text editing purposes, the timeline for learning a sophisticated text
-editor looks like this. In an hour or two, you'll learn basic editor functions
-such as opening and editing files, save/quit, and navigating buffers. Once
-you're 20 hours in, you should be as fast as you were with your old editor.
-After that, the benefits start: you will have enough knowledge and muscle
-memory that using the new editor saves you time. Modern text editors are fancy
-and powerful tools, so the learning never stops: you'll get even faster as you
-learn more.
+Se você seguir o método acima, se comprometendo totalmente em usar o novo
+programa para todas as suas edições de texto, o tempo para aprender um editor
+sofisticado vai parecer algo como isso. Em uma hora ou duas, você vai aprender
+as funcionalidades básicas do editor, como abrir e editar arquivos, salvar e
+sair, navegar pelos buffers. Quando você estiver com 20 horas de investidas,
+você provavelmente estará tão rápido quanto você era no seu editor antigo.
+Após isso, os benefícios começam: você vai ter conhecimento e memória muscular
+suficiente para que usar esse novo editor te economize tempo. Editores de texto
+moderno são bonitas e poderosas ferramentas, então a aprendizagem nunca para:
+você vai ficar mais rápido cada vez que você aprende mais
 
-# Which editor to learn?
+# Qual editor escolher?
 
-Programmers have [strong opinions](https://en.wikipedia.org/wiki/Editor_war)
+Programadores têm uma [opinião](https://en.wikipedia.org/wiki/Editor_war) bem forte sobre seus editores de texto
 about their text editors.
 
-Which editors are popular today? See this [Stack Overflow
+Quais editores são populares hoje? Veja esse [Stack Overflow
 survey](https://insights.stackoverflow.com/survey/2019/#development-environments-and-tools)
-(there may be some bias because Stack Overflow users may not be representative
-of programmers as a whole). [Visual Studio
-Code](https://code.visualstudio.com/) is the most popular editor.
-[Vim](https://www.vim.org/) is the most popular command-line-based editor.
+(Pode ter um pouco de viés, pois os usuários do Stack Overflow talvez não
+representem os programadores no geral). [Visual Studio
+Code](https://code.visualstudio.com/) é o editor mais popular.
+[Vim](https://www.vim.org/) é o mais popular editor de linha de comando
 
 ## Vim
 
-All the instructors of this class use Vim as their editor. Vim has a rich
-history; it originated from the Vi editor (1976), and it's still being
-developed today. Vim has some really neat ideas behind it, and for this reason,
-lots of tools support a Vim emulation mode (for example, 1.4 million people
-have installed [Vim emulation for VS code](https://github.com/VSCodeVim/Vim)).
-Vim is probably worth learning even if you finally end up switching to some
-other text editor.
+Todos os instrutores dessa aula usa Vim como seu editor de texto. Vim tem uma
+rica história; é originário do editor VI (1975), e ainda está em desenvolvimento
+hoje. O Vim tem umas ideas bastante polidas por trás e, por conta disso, muitas
+ferramentas suportam uma emulação de VIM ( por exemploo, 1.4 milhões de pessoas
+tem instalada [Emule VIM no VS code](https://github.com/VSCodeVim/Vim)).
+VIM provavelmente vale apena aprender mesmo que você acabe por trocar por outro
+editor no fim das contas :)
 
-It's not possible to teach all of Vim's functionality in 50 minutes, so we're
-going to focus on explaining the philosophy of Vim, teaching you the basics,
-showing you some of the more advanced functionality, and giving you the
-resources to master the tool.
+Não é possivel ensinar todas as funcionalidades do VIM em 50 minutos, então nós
+vamos nos focar em explicar a filosofia por trás do VIM, ensinar o básico,
+mostrar umas funcionalidades avançadas e te dar os recursos para você se dominar
+a ferramenta.
 
-# Philosophy of Vim
+# Filosofia do Vim
 
-When programming, you spend most of your time reading/editing, not writing. For
-this reason, Vim is a _modal_ editor: it has different modes for inserting text
-vs manipulating text. Vim is programmable (with Vimscript and also other
-languages like Python), and Vim's interface itself is a programming language:
-keystrokes (with mnemonic names) are commands, and these commands are
-composable. Vim avoids the use of the mouse, because it's too slow; Vim even
-avoids using the arrow keys because it requires too much movement.
+Quando programa, você passa a maior parte do tempo lendo/editando e não
+escrevendo. Por conta disso, VIM é um editor _modal_: ele tem modos
+diferentes para inserir texto vs manipular texto. VIM é programável (com
+Vimscript e outras linguagens como Python), e a interface do VIM por si só é
+uma linguagem de programação:
+as teclas (com nomes mnemônicos) são comandos, e esses comandos ser
+compostos. VIM evita o uso do mouse, pois é muito lento; VIM evita até mesmo
+usar as teclas de setas (navegação) pois precisa de muito movimento para
+apertá-las.
 
-The end result is an editor that can match the speed at which you think.
+O resultado final é um editor que te traz a velocidade do seu pensamento
+na hora de editar seu código.
 
 # Modal editing
 
-Vim's design is based on the idea that a lot of programmer time is spent
-reading, navigating, and making small edits, as opposed to writing long streams
-of text. For this reason, Vim has multiple operating modes.
+O design do VIM é baseado na ideia de que muito tempo do programador é usado
+para ler, navegar e fazer pequenas edições, ao contrário de uma grande edição
+de texto. Por conta disso o VIM tem vários modos para trabalhar.
 
-- **Normal**: for moving around a file and making edits
-- **Insert**: for inserting text
-- **Replace**: for replacing text
-- **Visual** (plain, line, or block): for selecting blocks of text
-- **Command-line**: for running a command
+- **Normal**: para mover-se por um arquivo e fazer edições
+- **Insert**: para inserir texto
+- **Replace**: para trocar texto
+- **Visual** (simples, linha, ou bloco): para selecionar blocos de texto
+- **Command-line**: para rodar comandos
 
-Keystrokes have different meanings in different operating modes. For example,
-the letter `x` in Insert mode will just insert a literal character 'x', but in
-Normal mode, it will delete the character under the cursor, and in Visual mode,
-it will delete the selection.
+Teclas tem diferentes significados em diferentes modos de trabalho. Por exemplo,
+a letra 'x' no modo Insert vai inserir um caractere literalmente 'x', mas no
+modo Normal, a letra 'x' vai deletar o caractere embaixo do cursor e no modo
+Visual ele vai deletar a seleção.
 
-In its default configuration, Vim shows the current mode in the bottom left.
-The initial/default mode is Normal mode. You'll generally spend most of your
-time between Normal mode and Insert mode.
+Em sua configuração padrão, VIM mostra o modo de trabalho na posição
+inferior esquerda. O modo padrão/inicial é o modo Normal. Você vai passar
+a maior parte do tempo entre os modos Normal e Insert.
 
-You change modes by pressing `<ESC>` (the escape key) to switch from any mode
-back to Normal mode. From Normal mode, enter Insert mode with `i`, Replace mode
-with `R`, Visual mode with `v`, Visual Line mode with `V`, Visual Block mode
-with `<C-v>` (Ctrl-V, sometimes also written `^V`), and Command-line mode with
+Você muda de modo pressionando '<ESC>' (a tecla escape) para mudar de
+qualquer modo de volta para o modo Normal. A partir do modo Normal,
+entra-se no modo Insert apertando a tecla 'i', no modo Replace apertando
+a teclar 'R', no visual com a tecla 'v', no visual de linha com a tecla 'V' , representado também por '^V') e no modo Commad-Line com ':'.
+no visual de bloco com o conjunto de teclas '<C-v>' (Ctrl-V, algumas vezes
 `:`.
 
-You use the `<ESC>` key a lot when using Vim: consider remapping Caps Lock to
-Escape ([macOS
-instructions](https://vim.fandom.com/wiki/Map_caps_lock_to_escape_in_macOS)).
+Você usará a tecla `<ESC>` muito enquanto estiver usando VIM: pode-se
+considerar alterar o CapsLock para Esc ([macOS instructions](https://vim.fandom.com/wiki/Map_caps_lock_to_escape_in_macOS)).
 
-# Basics
+# Básico
 
-## Inserting text
+## Inserindo texto
 
-From Normal mode, press `i` to enter Insert mode. Now, Vim behaves like any
-other text editor, until you press `<ESC>` to return to Normal mode. This,
-along with the basics explained above, are all you need to start editing files
-using Vim (though not particularly efficiently, if you're spending all your
-time editing from Insert mode).
+A partir do modo Normal, pressione `i` para entrar no modo de inserção.
+Agora, o VIM se comportará como um editor de texto qualquer, até você
+apertar `<ESC>` para retornar pro modo Normal. Isso juntamente com o básico
+explicado acima é tudo que você precisa para começar editar arquivos usando
+VIM (não necessariamente de forma eficiente se você está passando todo o tempo
+editando seu arquivo no modo de Inserção)
 
-## Buffers, tabs, and windows
+## Buffers, abas, e janelas
 
-Vim maintains a set of open files, called "buffers". A Vim session has a number
-of tabs, each of which has a number of windows (split panes). Each window shows
-a single buffer. Unlike other programs you are familiar with, like web
-browsers, there is not a 1-to-1 correspondence between buffers and windows;
-windows are merely views. A given buffer may be open in _multiple_ windows,
-even within the same tab. This can be quite handy, for example, to view two
-different parts of a file at the same time.
+O VIM mantém um conjunto de arquivos abertos, chamados de "buffers". Uma
+sessão do VIM tem uma quantidade de abas, e cada aba tem uma quantidade de
+janelas (painéis separados). Cada janela/painel mostra apenas um buffer.
+Diferente de outros programas que você está familiarizado, como navegadores,
+não existe uma correspondência de 1-para-1 entre buffers e janelas/paineis,
+até mesmo dentro da mesma aba. Isso pode ser bem útil, por exemplo, para ver
+duas partes diferentes de um arquivo ao mesmo tempo.
 
-By default, Vim opens with a single tab, which contains a single window.
+Por padrão, o VIM abre apenas uma aba que contém apenas uma janela/painel.
 
-## Command-line
+## Linha de comando
 
-Command mode can be entered by typing `:` in Normal mode. Your cursor will jump
-to the command line at the bottom of the screen upon pressing `:`. This mode
-has many functionalities, including opening, saving, and closing files, and
-[quitting Vim](https://twitter.com/iamdevloper/status/435555976687923200).
+Podemos entrar no modo de comando apertando a tecla `:` no modo Normal. Seu
+cursor vai pular para a linha de comando na parte inferior da tela assim que
+apertar `:`. Esse modo tem muitas funcionalidades, incluindo abrir, salvar,
+fechar e
+[sair do VIM](https://twitter.com/iamdevloper/status/435555976687923200).
 
-- `:q` quit (close window)
-- `:w` save ("write")
-- `:wq` save and quit
-- `:e {name of file}` open file for editing
-- `:ls` show open buffers
-- `:help {topic}` open help
-    - `:help :w` opens help for the `:w` command
-    - `:help w` opens help for the `w` movement
+- `:q` sair (fechar janela)
+- `:w` salvar ("escrever")
+- `:wq` salvar e sair
+- `:e {nome do arquivo}` abrir arquivo para editar
+- `:ls` mostrar buffers abertos
+- `:help {tópico}` abrir ajudar
+    - `:help :w` abrir ajuda para o comando `:w`
+    - `:help w` abrir ajuda para o movimento `w`
 
-# Vim's interface is a programming language
+# A interface do VIM é uma própria linguagem de programação
 
-The most important idea in Vim is that Vim's interface itself is a programming
-language. Keystrokes (with mnemonic names) are commands, and these commands
-_compose_. This enables efficient movement and edits, especially once the
-commands become muscle memory.
+A mais importante ideia no VIM é que sua interface é uma própria linguagem
+de programação. Teclas (com nomes mnemônicos) são comandos e esses comandos
+podem ser compostos. Isso permite edições e movimentações eficientes,
+principalmente quando os comandos entram na sua memória muscular.
 
-## Movement
+## Movimento
 
-You should spend most of your time in Normal mode, using movement commands to
-navigate the buffer. Movements in Vim are also called "nouns", because they
-refer to chunks of text.
+Você deve passar a maior parte do seu tempo no modo Normal, usando
+commandos de movimento para navegar dentro do seu buffer. Movimentos no VIM
+também são chamados de "substantivos", porque eles se referem a um conjunto de
+texto
 
-- Basic movement: `hjkl` (left, down, up, right)
-- Words: `w` (next word), `b` (beginning of word), `e` (end of word)
-- Lines: `0` (beginning of line), `^` (first non-blank character), `$` (end of line)
-- Screen: `H` (top of screen), `M` (middle of screen), `L` (bottom of screen)
-- Scroll: `Ctrl-u` (up), `Ctrl-d` (down)
-- File: `gg` (beginning of file), `G` (end of file)
-- Line numbers: `:{number}<CR>` or `{number}G` (line {number})
-- Misc: `%` (corresponding item)
-- Find: `f{character}`, `t{character}`, `F{character}`, `T{character}`
-    - find/to forward/backward {character} on the current line
-    - `,` / `;` for navigating matches
-- Search: `/{regex}`, `n` / `N` for navigating matches
+- Movimento básico: `hjkl` (esquerda, baixo, cima, direita)
+- Palavras: `w` (próxima palavra), `b` (começo da palavra), `e` (fim da
+palavra)
+- Linhas: `0` (começo da linha), `^` (primeiro caractere não vazio), `$` (fim
+da linha)
+- Janela: `H` (topo da janela), `M` (meio da janela), `L` (fim da janela)
+- Rolar: `Ctrl-u` (para cima), `Ctrl-d` (para baixo)
+- Arquivo: `gg` (começo do arquivo), `G` (fim do arquivo)
+- Número da Linha: `:{number}<CR>` ou `{number}G` (linha {número})
+- Etc: `%` (item correspondente)
+- Encontrar: `f{character}`, `t{character}`, `F{character}`, `T{character}`
+    - encontrar/para frente/ao contrário {caractere} na mesma linha
+    - `,` / `;` para navegar entre os resultados
+- Procurar: `/{regex}`, `n` / `N` para navegar entre os resultados
 
-## Selection
+## Seleção
 
-Visual modes:
+Modos Visuais:
 
 - Visual
 - Visual Line
 - Visual Block
 
-Can use movement keys to make selection.
+Pode usar os movimentos para fazer seleções.
 
-## Edits
+## Edição
 
-Everything that you used to do with the mouse, you now do with the keyboard
-using editing commands that compose with movement commands. Here's where Vim's
-interface starts to look like a programming language. Vim's editing commands
-are also called "verbs", because verbs act on nouns.
+Tudo que você está acostumado a fazer com o mouse, a partir de agora você irá
+fazer com o teclado usando comandos de edição para compor seus comandos de
+movimentos. É aqui que a interface do VIM começa a ficar parecido com uma
+linguagem de programação. Os comandos de edição do VIM também são chamados
+de "verbos", porque verbos agem em cima de substantivos.
 
-- `i` enter Insert mode
-    - but for manipulating/deleting text, want to use something more than
-    backspace
-- `o` / `O` insert line below / above
-- `d{motion}` delete {motion}
-    - e.g. `dw` is delete word, `d$` is delete to end of line, `d0` is delete
-    to beginning of line
-- `c{motion}` change {motion}
-    - e.g. `cw` is change word
-    - like `d{motion}` followed by `i`
-- `x` delete character (equal do `dl`)
-- `s` substitute character (equal to `xi`)
-- Visual mode + manipulation
-    - select text, `d` to delete it or `c` to change it
-- `u` to undo, `<C-r>` to redo
-- `y` to copy / "yank" (some other commands like `d` also copy)
-- `p` to paste
-- Lots more to learn: e.g. `~` flips the case of a character
+- `i` entra no modo de Inserção
+    - Para manipular/deletar texto, você deve usar alguma coisa a mais do que o backspace
+- `o` / `O` insere linha abaixo / acima
+- `d{motion}` deleta {movimento}
+    - Ex: `dw` deleta palavra, `d$` deleta até o fim da linha, `d0` deleta
+    até o começo da linha.
+- `c{motion}` muda {movimento}
+    - Ex: `cw` muda a palavra
+    - Assim como `d{motion}` só que seguido de i `i`
+- `x` deleta o caractere (igual a`dl`)
+- `s` substitui o caractere (igual a `xi`)
+- Modo visual + manipulação
+    - seleciona o texto, `d` para deletá-lo ou `c` para mudá-lo
+- `u` desfazer, `<C-r>` refazer
+- `y` copiar / "yank" (alguns comandos como o `d` também copiam)
+- `p` colar
+- Muito mais para aprender: Ex: `~` muda o caso da letra (maiúscula,
+minúscula)
 
-## Counts
+## Contagem
 
-You can combine nouns and verbs with a count, which will perform a given action
-a number of times.
+Você pode combinar substantivos e verbos com contagem, e elas vão performar
+uma determinada ação uma quantidade de vezes.
 
-- `3w` move 3 words forward
-- `5j` move 5 lines down
-- `7dw` delete 7 words
+- `3w` move o cursor 3 palavras pra frente
+- `5j` move o cursor 5 linhas para baixo
+- `7dw` deleta 7 palavras
 
-## Modifiers
+## Modificadores
 
-You can use modifiers to change the meaning of a noun. Some modifiers are `i`,
-which means "inner" or "inside", and `a`, which means "around".
+Você pode usar modificadores para mudar o sentido de um substantivo. Alguns
+modificadores são `i` que quer dizer "por dentro" ou "dentro" e `a`, que quer
+dizer "ao redor"
 
-- `ci(` change the contents inside the current pair of parentheses
-- `ci[` change the contents inside the current pair of square brackets
-- `da'` delete a single-quoted string, including the surrounding single quotes
+- `ci(` muda o conteúdo dentro do par de parênteses.
+- `ci[` muda o conteudo dentro do par de colchetes.
+- `da'` deleta, incluido as aspas simples, todo o conteúdo dentro das aspas
+simples
 
-# Demo
+# Demonstração
 
-Here is a broken [fizz buzz](https://en.wikipedia.org/wiki/Fizz_buzz)
-implementation:
+Aqui está uma implementação quebrada [fizz buzz](https://en.wikipedia.org/wiki/Fizz_buzz)
 
 ```python
 def fizz_buzz(limit):
@@ -241,37 +252,38 @@ def main():
     fizz_buzz(10)
 ```
 
-We will fix the following issues:
+Nós vamos ajeitar os seguintes problemas:
 
-- Main is never called
-- Starts at 0 instead of 1
-- Prints "fizz" and "buzz" on separate lines for multiples of 15
-- Prints "fizz" for multiples of 5
-- Uses a hard-coded argument of 10 instead of taking a command-line argument
+- Main nunca foi chamada
+- Começa em 0 ao invés de 1
+- Printa "fizz" e "buzz" em linhas separadas nos múltiplos de 15
+- Printa "fizz" em múltiplos de 5
+- Usa um argumento hard-coded de 10 ao invés de usar um argumento de linha
+de commando
 
 {% comment %}
-- main is never called
-  - `G` end of file
-  - `o` open new line below
-  - type in "if __name__ ..." thing
-- starts at 0 instead of 1
-  - search for `/range`
-  - `ww` to move forward 2 words
-  - `i` to insert text, "1, "
-  - `ea` to insert after limit, "+1"
-- newline for "fizzbuzz"
-  - `jj$i` to insert text at end of line
-  - add ", end=''"
-  - `jj.` to repeat for second print
-  - `jjo` to open line below if
-  - add "else: print()"
+- main nunca é chamada
+  - `G` fim do arquivo
+  - `o` abra uma nova linha abaixo
+  - escreva o código "if __name__ ..."
+- começar com 0 ao invés de 1
+  - procure por `/range`
+  - `ww` para mover duas palavras para frente
+  - `i` para inserir o texto, "1, "
+  - `ea` para inserir depois do limite, "+1"
+- nova linha para "fizzbuzz"
+  - `jj$i` para inserir o texto ao fim da linha
+  - adicione ", end=''"
+  - `jj.` para repetir o segundo print
+  - `jjo` abir linha embaixo se
+  - adicionar "else: print()"
 - fizz fizz
-  - `ci'` to change fizz
-- command-line argument
-  - `ggO` to open above
+  - `ci'` para mudar fizz
+- argumento de linha de comando
+  - `ggO` abrir linha acima
   - "import sys"
   - `/10`
-  - `ci(` to "int(sys.argv[1])"
+  - `ci(` para "int(sys.argv[1])"
 {% endcomment %}
 
 See the lecture video for the demonstration. Compare how the above changes are
@@ -279,182 +291,198 @@ made using Vim to how you might make the same edits using another program.
 Notice how very few keystrokes are required in Vim, allowing you to edit at the
 speed you think.
 
-# Customizing Vim
+# Customizando o VIM
 
-Vim is customized through a plain-text configuration file in `~/.vimrc`
-(containing Vimscript commands). There are probably lots of basic settings that
-you want to turn on.
+O VIM é customizado por um arquivo de configuração de texto que fica em
+`~/.vimrc` (contendo comandos Vimscript). Provavelmente existem muitas
+opções básicas que você gostaria de ligar.
 
-We are providing a well-documented basic config that you can use as a starting
-point. We recommend using this because it fixes some of Vim's quirky default
-behavior. **Download our config [here](/2020/files/vimrc) and save it to
-`~/.vimrc`.**
+Nós estamos disponibilizando uma configuração bem documentada que você pode
+usar como ponto de partida. Nós recomendamos usar isso porque ele ajeita
+algumas configurações peculiares padrões do VIM **Baixe sua configuração [aqui](/2020/files/vimrc) e salve em `~/.vimrc`.**
 
-Vim is heavily customizable, and it's worth spending time exploring
-customization options. You can look at people's dotfiles on GitHub for
-inspiration, for example, your instructors' Vim configs
+O VIM é extremamente customizável, e vale a pena passar um tempo explorando
+suas opções de customização. Você pode olhar para os dotfiles no Github de
+algumas pessoas para ter como inspiração. Como base, aqui vai os dotfiles do
+VIM dos instrutores
 ([Anish](https://github.com/anishathalye/dotfiles/blob/master/vimrc),
-[Jon](https://github.com/jonhoo/configs/blob/master/editor/.config/nvim/init.vim) (uses [neovim](https://neovim.io/)),
-[Jose](https://github.com/JJGO/dotfiles/blob/master/vim/.vimrc)). There are
-lots of good blog posts on this topic too. Try not to copy-and-paste people's
-full configuration, but read it, understand it, and take what you need.
+[Jon](https://github.com/jonhoo/configs/blob/master/editor/.config/nvim/init.vim) (Usa [neovim](https://neovim.io/)),
+[Jose](https://github.com/JJGO/dotfiles/blob/master/vim/.vimrc)). Existem
+muitos materiais desse tópico na internet. Tente não copiar e colar a
+configuração inteira das pessoas, mas leia, entenda e pegue o que você
+precisar.
 
-# Extending Vim
+# Extendendo VIM
 
-There are tons of plugins for extending Vim. Contrary to outdated advice that
-you might find on the internet, you do _not_ need to use a plugin manager for
-Vim (since Vim 8.0). Instead, you can use the built-in package management
-system. Simply create the directory `~/.vim/pack/vendor/start/`, and put
-plugins in there (e.g. via `git clone`).
+Tem uma grande quantidade de plugins para aumentar as possibilidades do VIM.
+Ao contrário de um conselho desatualizado que você pode encontrar na
+internet, você não precisa usar um gerenciador de plugin para o VIM (desde
+o Vim 8.0). Ao invés disso, você pode usar o gerenciador de pacote
+integrado. Simplesmente crie um diretório `~/.vim/pack/vendor/start/`, e
+coloque os plugins lá (Ex: via `git clone`).
 
-Here are some of our favorite plugins:
+Aqui estão alguns dos nossos plugins favoritos:
 
-- [ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim): fuzzy file finder
-- [ack.vim](https://github.com/mileszs/ack.vim): code search
-- [nerdtree](https://github.com/scrooloose/nerdtree): file explorer
-- [vim-easymotion](https://github.com/easymotion/vim-easymotion): magic motions
+- [ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim): Buscador de Arquivo
+Indistinto
+- [ack.vim](https://github.com/mileszs/ack.vim): Procura de Código
+- [nerdtree](https://github.com/scrooloose/nerdtree): Explorador de Arquivo
+- [vim-easymotion](https://github.com/easymotion/vim-easymotion):
+Movimentos mágicos
 
-We're trying to avoid giving an overwhelmingly long list of plugins here. You
-can check out the instructors' dotfiles
+Nós estamos tentando evitar entregar uma longa lista de plugins aqui. Você
+pode checar os arquivos de configuração dos instrutores se quiser.
 ([Anish](https://github.com/anishathalye/dotfiles),
 [Jon](https://github.com/jonhoo/configs),
-[Jose](https://github.com/JJGO/dotfiles)) to see what other plugins we use.
-Check out [Vim Awesome](https://vimawesome.com/) for more awesome Vim plugins.
-There are also tons of blog posts on this topic: just search for "best Vim
-plugins".
+[Jose](https://github.com/JJGO/dotfiles)) para ver quais outros plugins nós
+usamos
+Dá uma olhada em [Vim Awesome](https://vimawesome.com/) para mais plugins do
+VIM
+Tem também uma grande quantidade de posts sobre esse assunto. Basta
+procurar por "best Vim Plugins".
 
-# Vim-mode in other programs
+# Modo Vim em outros programas
 
-Many tools support Vim emulation. The quality varies from good to great;
-depending on the tool, it may not support the fancier Vim features, but most
-cover the basics pretty well.
+Muitas ferramentas suportam a emulação do Vim. A qualidade varia de bom para
+excelente; Dependendo da ferramenta pode ser que não suporte as
+características mais avançadas, mas a maioria suporta o básico de forma bem
+feita.
 
 ## Shell
 
-If you're a Bash user, use `set -o vi`. If you use Zsh, `bindkey -v`. For Fish,
-`fish_vi_key_bindings`. Additionally, no matter what shell you use, you can
-`export EDITOR=vim`. This is the environment variable used to decide which
-editor is launched when a program wants to start an editor. For example, `git`
-will use this editor for commit messages.
+Se você é um usuario de Bash, use `set -o vi`. Se é de Zsh, `bindkey -v`. para
+Fish,
+`fish_vi_key_bindings`. Adicionalmente, não importa qual shell você usa, você
+pode `export EDITOR=vim`. Essa variável de ambiente é usada para decidir qual
+editor é chamado quando o programa quer iniciar um editor. Por exemplo, `git`
+vai usar esse editor para comitar mensagens.
 
 ## Readline
 
-Many programs use the [GNU
-Readline](https://tiswww.case.edu/php/chet/readline/rltop.html) library for
-their command-line interface. Readline supports (basic) Vim emulation too,
-which can be enabled by adding the following line to the `~/.inputrc` file:
+Muitos programas usam a [GNU
+Readline](https://tiswww.case.edu/php/chet/readline/rltop.html) biblioteca
+para sua interface de linha de comando. Readline suporta uma emulação
+Básica do VIM também que pode ser adicionada utilizando a seguinte linha no
+arquivo `~/.inputrc`:
 
 ```
 set editing-mode vi
 ```
 
-With this setting, for example, the Python REPL will support Vim bindings.
+Com essa configuração, por exemplo, o REPL do Python vai suportar os
+comandos do Vim
 
-## Others
+## Outros
 
-There are even vim keybinding extensions for web
-[browsers](http://vim.wikia.com/wiki/Vim_key_bindings_for_web_browsers) - some
-popular ones are
+Têm extensões para a internet dos atalhos do Vim
+[browsers](http://vim.wikia.com/wiki/Vim_key_bindings_for_web_browsers) -
+algumas populares
 [Vimium](https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb?hl=en)
-for Google Chrome and [Tridactyl](https://github.com/tridactyl/tridactyl) for
-Firefox. You can even get Vim bindings in [Jupyter
+para o Google Chrome [Tridactyl](https://github.com/tridactyl/tridactyl) para
+Firefox. Você pode até conseguir os atalhos do Vim no [Jupyter
 notebooks](https://github.com/lambdalisue/jupyter-vim-binding).
 
-# Advanced Vim
+# Vim Avançado
 
-Here are a few examples to show you the power of the editor. We can't teach you
-all of these kinds of things, but you'll learn them as you go. A good
-heuristic: whenever you're using your editor and you think "there must be a
-better way of doing this", there probably is: look it up online.
+Aqui estão alguns exemplos para mostrar você o poder do editor. Nós não
+podemos ensinar a você todas essas coisas, mas você vai aprender elas
+durante sua jornada. Uma boa heurística: quando você estiver usando o
+editor e pensar "deve ter algo para fazer isso de maneira mais rápida e
+prática", provavelmente irá existir: procure online.
 
-## Search and replace
+## Procurar e substituir
 
-`:s` (substitute) command ([documentation](http://vim.wikia.com/wiki/Search_and_replace)).
+`:s` (substituir) comando ([documentation](http://vim.wikia.com/wiki/Search_and_replace)).
 
 - `%s/foo/bar/g`
-    - replace foo with bar globally in file
+    - substitua foo por bar globalmente no arquivo
 - `%s/\[.*\](\(.*\))/\1/g`
-    - replace named Markdown links with plain URLs
+    - substitua links nomeados de Markdown por simples URLs
 
-## Multiple windows
+## Multiplas Janelas
 
-- `:sp` / `:vsp` to split windows
-- Can have multiple views of the same buffer.
+- `:sp` / `:vsp` para dividir as janelas
+- Você pode ter multiplas visões do mesmo buffer.
 
 ## Macros
 
-- `q{character}` to start recording a macro in register `{character}`
-- `q` to stop recording
-- `@{character}` replays the macro
-- Macro execution stops on error
-- `{number}@{character}` executes a macro {number} times
-- Macros can be recursive
-    - first clear the macro with `q{character}q`
-    - record the macro, with `@{character}` to invoke the macro recursively
-    (will be a no-op until recording is complete)
-- Example: convert xml to json ([file](/2020/files/example-data.xml))
-    - Array of objects with keys "name" / "email"
-    - Use a Python program?
-    - Use sed / regexes
+- `q{character}` para começar a gravar a macro no registrador `{character}`
+- `q` para parar a gravação
+- `@{character}` executa a macro
+- Execução da macro para no erro
+- `{number}@{character}` executa a macro {número} vezes
+- Macros podem ser recursivas
+    - primeiro limpe a macro com `q{character}q`
+    - grave a macro, com `@{character}` para executar a macro
+    recursivamente
+    (vai ser uma no-op até que a gravação esteja completa)
+- Exemplo: converter xml to json ([file](/2020/files/example-data.xml))
+    - Array de objetos com as chaves "name" / "email"
+    - Usar um programa Python?
+    - Usar sed / regexes
         - `g/people/d`
         - `%s/<person>/{/g`
         - `%s/<name>\(.*\)<\/name>/"name": "\1",/g`
         - ...
-    - Vim commands / macros
-        - `Gdd`, `ggdd` delete first and last lines
-        - Macro to format a single element (register `e`)
-            - Go to line with `<name>`
+    - Comandos Vim / macros
+        - `Gdd`, `ggdd` Deleta a primeira e última linha
+        - Macro para formatar apenas um elemento ( registro `e` )
+            - Vai para linha com `<name>`
             - `qe^r"f>s": "<ESC>f<C"<ESC>q`
-        - Macro to format a person
-            - Go to line with `<person>`
+        - Macro para formatar uma person
+            - Vai para a linha com `<person>`
             - `qpS{<ESC>j@eA,<ESC>j@ejS},<ESC>q`
-        - Macro to format a person and go to the next person
-            - Go to line with `<person>`
+        - Macro para formatar uma person e ir para a próxima person
+            - Vai para a linha `<person>`
             - `qq@pjq`
-        - Execute macro until end of file
+        - Executar a macro até o fim do arquivo
             - `999@q`
-        - Manually remove last `,` and add `[` and `]` delimiters
+        - Manualmente remover o último `,` e adicionar `[` e `]`
+        delimitadores
 
-# Resources
+# Recursos
 
-- `vimtutor` is a tutorial that comes installed with Vim - if Vim is installed, you should be able to run `vimtutor` from your shell
-- [Vim Adventures](https://vim-adventures.com/) is a game to learn Vim
+- `vimtutor` é um tutorial que vem com o Vim instalado - se o Vim está
+instalado, você pode executar o comando `vimtutor` do seu shell
+- [Vim Adventures](https://vim-adventures.com/) um jogo para aprender Vim
 - [Vim Tips Wiki](http://vim.wikia.com/wiki/Vim_Tips_Wiki)
-- [Vim Advent Calendar](https://vimways.org/2019/) has various Vim tips
-- [Vim Golf](http://www.vimgolf.com/) is [code golf](https://en.wikipedia.org/wiki/Code_golf), but where the programming language is Vim's UI
+- [Vim Advent Calendar](https://vimways.org/2019/) tem várias dicas Vim
+- [Vim Golf](http://www.vimgolf.com/) é [code golf](https://en.wikipedia.org/wiki/Code_golf), mas onde a linguagem de programação é Vim's UI
 - [Vi/Vim Stack Exchange](https://vi.stackexchange.com/)
 - [Vim Screencasts](http://vimcasts.org/)
-- [Practical Vim](https://pragprog.com/titles/dnvim2/) (book)
+- [Practical Vim](https://pragprog.com/titles/dnvim2/) (livro)
 
-# Exercises
+# Exercícios
 
-1. Complete `vimtutor`. Note: it looks best in a
-   [80x24](https://en.wikipedia.org/wiki/VT100) (80 columns by 24 lines)
-   terminal window.
-1. Download our [basic vimrc](/2020/files/vimrc) and save it to `~/.vimrc`. Read
-   through the well-commented file (using Vim!), and observe how Vim looks and
-   behaves slightly differently with the new config.
-1. Install and configure a plugin:
+1. Complete `vimtutor`. Nota: ficar melhor em
+   [80x24](https://en.wikipedia.org/wiki/VT100) (80 colunas por 24 linhas)
+   janela do terminal.
+1. Download nosso [basic vimrc](/2020/files/vimrc) e salve para `~/.vimrc`. Leia
+   o bem documentado arquivo (using Vim!), e observe como o Vim é e se
+   comporta com a nova configuração.
+1. Instale e configure um plugin:
    [ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim).
-   1. Create the plugins directory with `mkdir -p ~/.vim/pack/vendor/start`
-   1. Download the plugin: `cd ~/.vim/pack/vendor/start; git clone
+   1. Crie um diretório de plugins com `mkdir -p ~/.vim/pack/vendor/start`
+   1. Baixe o plugin: `cd ~/.vim/pack/vendor/start; git clone
       https://github.com/ctrlpvim/ctrlp.vim`
-   1. Read the
-      [documentation](https://github.com/ctrlpvim/ctrlp.vim/blob/master/readme.md)
-      for the plugin. Try using CtrlP to locate a file by navigating to a
-      project directory, opening Vim, and using the Vim command-line to start
+   1. Leia a
+      [documentação](https://github.com/ctrlpvim/ctrlp.vim/blob/master/readme.md)
+      para o plugin. Tente usar CtrlP para localizar o arquivo e navegar para
+      o diretório do projeto, abrir o Vim e usar a linha de commando para
+      começar
       `:CtrlP`.
-    1. Customize CtrlP by adding
-       [configuration](https://github.com/ctrlpvim/ctrlp.vim/blob/master/readme.md#basic-options)
-       to your `~/.vimrc` to open CtrlP by pressing Ctrl-P.
-1. To practice using Vim, re-do the [Demo](#demo) from lecture on your own
-   machine.
-1. Use Vim for _all_ your text editing for the next month. Whenever something
-   seems inefficient, or when you think "there must be a better way", try
-   Googling it, there probably is. If you get stuck, come to office hours or
-   send us an email.
-1. Configure your other tools to use Vim bindings (see instructions above).
-1. Further customize your `~/.vimrc` and install more plugins.
-1. (Advanced) Convert XML to JSON ([example file](/2020/files/example-data.xml))
-   using Vim macros. Try to do this on your own, but you can look at the
-   [macros](#macros) section above if you get stuck.
+    1. Customize CtrlP adicionando
+       [configuração](https://github.com/ctrlpvim/ctrlp.vim/blob/master/readme.md#basic-options)
+       em seu `~/.vimrc` para abrir o CtrlP pressionando Ctrl-P
+1. Para praticar usando Vim, refaça o [Demo](#demo) da aula na sua própria
+   máquina.
+1. Use Vim para _todas_ as suas ediçdoes de texto no próximo mês. Sempre que
+   alguma coisa parecer ineficiente, ou quando você pensar "Deve ter
+   alguma outra maneira melhor", tente dar um Google, provavelmente tem. Se
+   você ficar preso, venha até nosso escritório ou mande nos um email.
+1. Configura suas outras ferramentas para usar os atalhos do Vim (veja as
+   intruções acima).
+1. Continue customizando seu `~/.vimrc` e instale mais plugins.
+1. (Avançado) Converter XML para JSON ([example file](/2020/files/example-data.xml))
+   usando Vim macros. Tente fazer você mesmo, mas você pode olhar em
+   [macros](#macros) acima se você ficar preso.
